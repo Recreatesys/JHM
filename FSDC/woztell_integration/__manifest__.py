@@ -23,7 +23,7 @@
     'demo': [],
     'images': [
         'static/description/icon.png',
-    ];
+    ],
     'installable': True,
     'application': False,
     'auto_install': False,
