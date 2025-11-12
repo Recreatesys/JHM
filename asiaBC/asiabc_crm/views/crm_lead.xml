@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="crm_lead_opportunity_form_inherit" model="ir.ui.view">
+        <field name="name">crm.lead.inherited.crm</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="before">
+                <group name="forms_data" string="Forms Data">
+                    <group>
+                        <field name="whatsapp_no"/>
+                        <field name="interested_in"/>
+                        <field name="citizen_record_id"/>
+                        <field name="nationality"/>
+                        <field name="gclid"/>
+                        <field name="business_type_id"/>
+                        <field name="annual_turnover_expected"/>
+                        <field name="years_of_experience_id"/>
+                        <field name="budget_expected"/>
+                    </group>
+                    <group>
+                        <field name="source_location_id"/>
+                        <field name="browser_id"/>
+                        <field name="ip_of_user"/>
+                        <field name="campaign_term"/>
+                        <field name="campaign_content"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

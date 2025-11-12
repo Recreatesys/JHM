@@ -1,0 +1,86 @@
+/* Apply styles only inside this specific dashboard page */
+.event-dashboard-page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #ffffff;
+    padding: 1rem;
+}
+
+.event-dashboard-page .dashboard-header {
+    text-align: center;
+    font-weight: bold;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.event-dashboard-page .event-title-container {
+    background-color: #76b5c5;
+    border-radius: 12px;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.event-dashboard-page .event-title {
+    font-size: 1rem;
+    padding-top: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+}
+.event-dashboard-page .dashboard-scroll {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-right: 10px;
+    padding-bottom: 2rem;
+}
+
+.event-dashboard-page .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    padding: 2rem;
+}
+
+.event-dashboard-page .dashboard-card {
+    background-color: #fff;
+    border-radius: 20px;
+    border: 2px solid #76b5c5;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.event-dashboard-page .dashboard-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.event-dashboard-page .btn {
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.event-dashboard-page .btn-outline-primary {
+    border-color: #76b5c5;
+    color: #76b5c5;
+}
+
+.event-dashboard-page .btn-outline-primary:hover {
+    background-color: #76b5c5;
+    color: #fff;
+}
+
+.event-dashboard-page .btn-outline-success:hover {
+    background-color: #198754;
+    color: #fff;
+}

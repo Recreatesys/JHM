@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_event_event_mp_list" model="ir.ui.view">
+            <field name="name">event.event.mp.list</field>
+            <field name="model">event.event</field>
+            <field name="arch" type="xml">
+                <list string="MP Event List">
+                    <field name="year"/>
+                    <field name="date_begin"/>
+                    <field name="event_type"/>
+                    <field name="count_in_qa_paper"/>
+                    <field name="count_in_lego_questions"/>
+                    <field name="name"/>
+                    <field name="event_chinese_name"/>
+                    <field name="event_location"/>
+                    <field name="event_chinese_location"/>
+                    <field name="organising_district"/>
+                    <field name="organising_district_chinese"/>
+                    <field name="target_audience"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_event_event_pr_list" model="ir.ui.view">
+            <field name="name">event.event.pr.list</field>
+            <field name="model">event.event</field>
+            <field name="arch" type="xml">
+                <list string="PR Event List">
+                    <field name="name"/>
+                    <field name="date_begin"/>
+                    <field name="company_id"/>
+                    <field name="event_location"/>
+                    <field name="event_representatives"/>
+                    <field name="teams"/>
+                    <field name="new_relationships"/>
+                    <field name="existing_relationship"/>
+                    <field name="regulatory"/>
+                </list>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="custom_report_payment_receipt_document" inherit_id="account.report_payment_receipt_document">
+        <xpath expr="//div[hasclass('row')]" position="replace">
+            <t t-set="is_account_invoice" t-value="True"/>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]" position="replace">
+            <div class="page">
+                <div class="row" style="border-bottom:1px solid black;">
+                    <h4>Receipt</h4>
+                </div>
+                <div class="row" style="border-bottom:1px solid black;">
+                    <table class="table table-borderless o_main_table">
+                        <tr>
+                            <td>
+                                <span>Date :</span>
+                            </td>
+                            <td>
+                                <span t-field="o.date"/>
+                            </td>
+                            <td>
+                                <span>Receipt No. :</span>
+                            </td>
+                            <td>
+                                <span t-field="o.name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Bill To :</span>
+                            </td>
+                            <td>
+                                <span t-field="o.partner_id"/>
+                            </td>
+                            <td>
+                                <span>Payment Method :</span>
+                            </td>
+                            <td>
+                                <span t-field="o.payment_method_line_id"/>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span>Company Code:</span>
+                            </td>
+                            <td>
+                                <span t-field="o.company_id.company_code"/>
+                            </td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+                <br/>
+                <div class="row">
+                    <table class="table table-borderless o_main_table">
+                        <tbody>
+                            <t t-foreach="o.reconciled_invoice_ids.invoice_line_ids" t-as="line">
+                                <tr>
+                                    <td class="text-left">
+                                        <t t-if="line.name">
+                                            <span t-field="line.name"/>
+                                        </t>
+                                    </td>
+                                    <td class="text-end">
+                                        <t t-if="line.currency_id">
+                                            <span t-field="line.currency_id"/>
+                                        </t>
+                                    </td>
+                                    <td class="text-end">
+                                        <t t-if="line.price_subtotal">
+                                            <span t-field="line.price_subtotal"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+                <br/>
+                <br/>
+                <div class="row">
+                    <div class="col-6">
+                        <span>Remark</span>
+                        <br/>
+                        <br/>
+                        <span t-field="o.narration"/>
+                    </div>
+                    <div class="col-6"/>
+                </div>
+                <br/>
+                <br/>
+                <br/>
+                <div class="row" style="border-top:1px solid black;">
+                    <div class="col-7"/>
+                    <t t-if="o.currency_id.name == 'USD'">
+                        <div class="col-2">
+                            <span>Total To Receive</span>
+                            <br/>
+                            <span>or</span>
+                            <br/>
+                            <span>Total To Receive</span>
+                        </div>
+                        <div class="col-1 text-end">
+                            <strong>
+                                <span>USD</span>
+                                <br/>
+                                <span>&#160;</span>
+                                <br/>
+                                <span>HKD</span>
+                            </strong>
+                        </div>
+                        <div class="col-2 text-end">
+                            <t t-if="o.amount_total">
+                                <strong>
+                                    <span t-field="o.amount_total"/>
+                                    <br/>
+                                    <span>&#160;</span>
+                                    <br/>
+                                    <t t-set="converted_amount"
+                                       t-value="float(o.currency_id._convert(o.amount_total, o.company_id.currency_id, o.company_id, o.invoice_date))"/>
+                                    <span t-esc="converted_amount"
+                                          t-options='{"widget": "monetary", "display_currency": o.company_currency_id}'/>
+                                </strong>
+                            </t>
+                        </div>
+                    </t>
+                    <t t-else="">
+                        <div class="col-2">
+                            <span>Total To Receive</span>
+                            <br/>
+                            <span>or</span>
+                            <br/>
+                            <span>Total To Receive</span>
+                        </div>
+                        <div class="col-1 text-end">
+                            <strong>
+                                <span>HKD</span>
+                                <br/>
+                                <span>&#160;</span>
+                                <br/>
+                                <span>USD</span>
+                            </strong>
+                        </div>
+                        <div class="col-2 text-end">
+                            <t t-if="o.amount_total">
+                                <strong>
+                                    <span t-field="o.amount_total"/>
+                                    <br/>
+                                    <span>&#160;</span>
+                                    <br/>
+                                    <t t-set="usd_currency" t-value="env.ref('base.USD')"/>
+                                    <t t-set="converted_amount"
+                                       t-value="float(o.company_id.currency_id._convert(o.amount_total, usd_currency, o.company_id, o.invoice_date))"/>
+                                    <span t-esc="converted_amount"
+                                          t-options='{"widget": "monetary", "display_currency": usd_currency}'/>
+                                </strong>
+                            </t>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </xpath>
+    </template>
+</odoo>

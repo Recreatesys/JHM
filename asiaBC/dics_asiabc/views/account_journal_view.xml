@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="dics_inherit_account_journal_form_view" model="ir.ui.view">
+            <field name="name">inherit.account.journal.form.view</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.view_account_journal_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='button_box']" position="after">
+                    <field name="logo" widget="image" class="oe_avatar"/>
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page string="Address">
+                        <group>
+                            <group>
+                                <label for="street" string="Address"/>
+                                <div class="o_address_format">
+                                    <field name="street" placeholder="Street..." class="o_address_street"/>
+                                    <field name="street2" placeholder="Street 2..." class="o_address_street"/>
+                                    <field name="city" placeholder="City" class="o_address_city"/>
+                                    <field name="state_id" class="o_address_state" placeholder="State"
+                                           options='{"no_open": True}'/>
+                                    <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                    <field name="country_id" placeholder="Country" class="o_address_country"
+                                           options='{"no_open": True, "no_create": True}'/>
+                                </div>
+                            </group>
+                            <group>
+                                <field name="phone" class="o_force_ltr"/>
+                                <field name="mobile" class="o_force_ltr"/>
+                                <field name="email"/>
+                                <field name="fax"/>
+                                <field name="branch_type"/>
+                                <field name="qr_payme" widget="image"/>
+                                <field name="qr_alipay" widget="image"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

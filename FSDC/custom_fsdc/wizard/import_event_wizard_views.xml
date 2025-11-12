@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_import_event_wizard_form" model="ir.ui.view">
+        <field name="name">view.import.event.wizard.form</field>
+        <field name="model">import.event.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Import Events">
+                <group>
+                    <field name="file" filename="filename"/>
+                    <field name="filename" invisible="1"/>
+                </group>
+                <footer>
+                    <button name="action_import_events" string="Import" type="object" class="btn-primary"/>
+                    <button name="cancel" special="cancel" class="btn-secondary" string="Cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

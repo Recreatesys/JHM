@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_documents_folders_portal_user,access.documents.folders.portal.user,model_documents_folders,document_access_control_management.upload_access_group,1,0,0,0
+access_documents_folders_portal_user,access.documents.folders.portal.user,model_documents_folders,document_access_control_management.read_access_group,1,0,0,0
+access_documents_folders_portal_user,access.documents.folders.portal.user,model_documents_folders,base.group_portal,1,0,0,0

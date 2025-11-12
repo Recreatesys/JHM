@@ -1,0 +1,22 @@
+<odoo>
+    <record id="ir_cron_company_reminder" model="ir.cron">
+        <field name="name">Company Compliance Reminders</field>
+        <field name="model_id" ref="base.model_res_partner"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_send_reminders()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active">True</field>
+    </record>
+
+    <record id="ir_cron_invoice_payment_due_reminder" model="ir.cron">
+        <field name="name">Invoice Payment Due Reminder</field>
+        <field name="model_id" ref="account.model_account_move"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_send_payment_due_reminders()</field>
+        <field name="active">True</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <!-- <field name="numbercall">-1</field> -->
+    </record>
+</odoo>

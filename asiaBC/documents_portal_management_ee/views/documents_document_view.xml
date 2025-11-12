@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="document_view_form_shared_users" model="ir.ui.view">
+            <field name="name">documents form</field>
+            <field name="model">documents.document</field>
+            <field name="priority" eval="1"/>
+            <field name="arch" type="xml">
+                <form create="false">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="owner_id" invisible="1"/>
+                                <field name="shared_user_ids" domain="[('id', '!=', uid)]" widget="many2many_tags" options="{'color_field': 'color'}"
+                                    groups="documents.group_documents_user"/>
+                            </group>
+                        </group>    
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

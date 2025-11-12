@@ -1,0 +1,28 @@
+<odoo>
+
+    <record id="finance" model="res.industry">
+        <field name="name">Finance</field>
+    </record>
+
+    <record id="corporate" model="res.industry">
+        <field name="name">Corporate</field>
+    </record>
+
+    <record id="legal" model="res.industry">
+        <field name="name">Legal</field>
+    </record>
+
+    <record id="media" model="res.industry">
+        <field name="name">Media</field>
+    </record>
+
+    <record id="government" model="res.industry">
+        <field name="name">Government</field>
+    </record>
+
+    <record id="academic" model="res.industry">
+        <field name="name">Academic</field>
+    </record>
+
+
+</odoo>

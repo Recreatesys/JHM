@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate='0'>
+        <record id="upload_access_group" model="res.groups">
+            <field name="name">Upload Access</field>
+        </record>
+
+        <record id="read_access_group" model="res.groups">
+            <field name="name">Read Access</field>
+        </record>
+
+    </data>
+</odoo>

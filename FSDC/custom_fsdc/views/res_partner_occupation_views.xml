@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="res_partner_occupation_list_view" model="ir.ui.view">
+        <field name="name">res.partner.occupation.list.view</field>
+        <field name="model">res.partner.occupation</field>
+        <field name="arch" type="xml">
+            <list string="Past Occupations">
+                <field name="occupation"/>
+                <field name="year_start"/>
+                <field name="year_end"/>
+                <field name="period"/>
+                <field name="company_id" string="Company" column_invisible="1"/>
+                <field name="partner_company_id" string="Company"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <field name="pa_name"/>
+                <field name="pa_email"/>
+                <field name="pa_phone"/>
+                <field name="pa_name_2"/>
+                <field name="pa_email_2"/>
+                <field name="pa_phone_2"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="res_partner_occupation_form_view" model="ir.ui.view">
+        <field name="name">res.partner.occupation.form.view</field>
+        <field name="model">res.partner.occupation</field>
+        <field name="arch" type="xml">
+            <form string="Past Occupations">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="occupation" string="Occupation"/>
+                            <label for="year_start" string="Period"/>
+                            <div class="row">
+                                <div class="col-auto">
+                                    <field name="year_start"/>
+                                </div>
+                                <div class="col-auto d-flex align-items-center">
+                                    <span>-</span>
+                                </div>
+                                <div class="col-auto">
+                                    <field name="year_end"/>
+                                </div>
+                            </div>
+                            <field name="company_id" string="Company" options="{'no_create': True}" invisible="1"/>
+                            <field name="partner_company_id" string="Company" />
+                            <field name="phone" string="Phone"/>
+                            <field name="email" string="Email"/>
+                        </group>
+                        <group>
+                            <field name="pa_name" string="PA's Name"/>
+                            <field name="pa_email" string="PA's Email"/>
+                            <field name="pa_phone" string="PA's Phone Number"/>
+                            <field name="pa_name_2" string="PA's Name 2"/>
+                            <field name="pa_email_2" string="PA's Email 2"/>
+                            <field name="pa_phone_2" string="PA's Phone Number 2"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_view_res_partner_occupation" model="ir.actions.act_window">
+        <field name="name">Past Occupations</field>
+        <field name="res_model">res.partner.occupation</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_res_partner_occupation"
+              action="action_view_res_partner_occupation"
+              name="Past Occupations"
+              parent="contacts.res_partner_menu_config"
+              sequence="2"/>
+</odoo>

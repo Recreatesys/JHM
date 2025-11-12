@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="custom_report_invoice_header" inherit_id="web.external_layout_standard">
+        <xpath expr="//div[contains(@t-attf-class, 'header')]" position="replace">
+            <t t-if="is_account_invoice">
+                <div class="header">
+                    <div class="row">
+                        <div class="col-4 text-left">
+                            <img t-if="o.journal_id.logo" t-att-src="image_data_uri(o.journal_id.logo)"
+                                 alt="Logo" style="max-height:100;max-width:100px"/>
+                        </div>
+                        <div class="col-4 text-center"></div>
+                        <div class="col-4" style="text-align:right; color: #0ABAB4;">
+                            Always your partner.
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6" style="text-align:left;">
+                            <t t-if="o.journal_id.company_id.name">
+                                <br/>
+                                <span style="font-weight:bold;" t-field="o.company_id.name"/>
+                            </t>
+                            <t t-if="o.journal_id.street">
+                                <br/>
+                                <span t-field="o.journal_id.street"/>
+                            </t>
+                            <t t-if="o.journal_id.street2">
+                                <br/>
+                                <span t-field="o.journal_id.street2"/>
+                            </t>
+                            <t t-if="o.journal_id.city">
+                                <br/>
+                                <span t-field="o.journal_id.city"/>
+                            </t>
+                            <t t-if="o.journal_id.state_id">
+                                <span t-field="o.journal_id.state_id"/>
+                            </t>
+                            <t t-if="o.journal_id.zip">
+                                <span t-field="o.journal_id.zip"/>
+                            </t>
+                            <t t-if="o.journal_id.country_id">
+                                <br/>
+                                <span t-field="o.journal_id.country_id"/>
+                            </t>
+                            <t t-if="o.journal_id.phone">
+                                <br/>
+                                <i class="fa fa-phone"/>
+                                <span style="padding-right:20px" t-field="o.journal_id.phone"/>
+                            </t>
+                            <t t-if="o.journal_id.mobile">
+                                <i class="fa fa-whatsapp fa-fw"/>
+                                <span t-field="o.journal_id.mobile"/>
+                            </t>
+                            <t t-if="o.journal_id.email">
+                                <br/>
+                                <i class="fa fa-envelope fa-fw"/>
+                                <span style="padding-right:20px" t-field="o.journal_id.email"/>
+                            </t>
+                            <t t-if="o.journal_id.fax">
+                                <i class="fa fa-print"/>
+                                <span t-field="o.journal_id.fax"/>
+                            </t>
+                        </div>
+                        <div class="col-6"></div>
+                    </div>
+                </div>
+            </t>
+
+            <t t-if="not is_account_invoice">
+                <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
+                    <div class="row">
+                        <div class="col-3 mb4">
+                            <img t-if="company.logo" t-att-src="image_data_uri(company.logo)"
+                                 style="max-height: 45px;"
+                                 alt="Logo"/>
+                        </div>
+                        <div class="col-9 text-end" style="margin-top:22px;" t-field="company.report_header"
+                             name="moto"/>
+                    </div>
+                    <div t-if="company.logo or company.report_header" class="row zero_min_height">
+                        <div class="col-12">
+                            <div style="border-bottom: 1px solid black;"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6" name="company_address">
+                            <ul class="list-unstyled">
+                                <li t-if="company.is_company_details_empty">
+                                    <t t-esc="company.partner_id"
+                                       t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'/>
+                                </li>
+                                <li t-else="">
+                                    <t t-esc="company.company_details"/>
+                                </li>
+                                <li t-if="forced_vat">
+                                    <t t-esc="company.country_id.vat_label or 'Tax ID'"/>:
+                                    <span t-esc="forced_vat"/>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+
+        <xpath expr="//div[contains(@t-attf-class, 'footer')]" position="replace">
+            <t t-if="is_account_invoice">
+                <div class="footer" style="border-top:2px solid #0ABAB4;">
+                    <div class="row">
+                        <div name="footer_left_column" class="col-8 text-left"/>
+                        <div name="footer_right_column" class="col-4 text-right"
+                             style="border-bottom:2px solid #0ABAB4;">
+                            <span>THANK YOU</span>
+                            <br/>
+                            <span>FOR YOUR BUSINESS</span>
+                        </div>
+                    </div>
+                </div>
+            </t>
+
+            <t t-if="not is_account_invoice">
+                <div class="footer">
+                    <div class="text-center" style="border-top: 1px solid black;">
+                        <ul class="list-inline mb4">
+                            <div t-field="company.report_footer"/>
+                        </ul>
+                        <div t-if="report_type == 'pdf'" class="text-muted">
+                            Page
+                            <span class="page"/>
+                            |
+                            <span class="topage"/>
+                        </div>
+                        <div t-if="report_type == 'pdf' and display_name_in_footer" class="text-muted">
+                            <span t-field="o.name"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </xpath>
+    </template>
+</odoo>

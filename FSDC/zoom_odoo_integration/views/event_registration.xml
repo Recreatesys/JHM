@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="event_registration_view_form_inherit" model="ir.ui.view">
+        <field name="name">event.registration.view.form.inherit</field>
+        <field name="model">event.registration</field>
+        <field name="inherit_id" ref="event.view_event_registration_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='company_name']" position="after">
+                <field name="job_title"/>
+                <field name="organization"/>
+                <field name="registration_date"/>
+            </xpath>
+            <xpath expr="//field[@name='create_date']" position="attributes">
+                <attribute name="string">Create Date</attribute>
+            </xpath>
+            <xpath expr="//field[@name='company_name']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="event_registration_view_list_inherit" model="ir.ui.view">
+        <field name="name">event.registration.view.list.inherit</field>
+        <field name="model">event.registration</field>
+        <field name="inherit_id" ref="event.view_event_registration_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="registration_date"/>
+            </xpath>
+            <xpath expr="//field[@name='create_date']" position="attributes">
+                <attribute name="column_invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

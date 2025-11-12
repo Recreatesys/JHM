@@ -1,0 +1,28 @@
+# -*- coding: utf-8 -*-
+{
+    "name": "Dics AsiaBC",
+    "version": "18.0",
+    "summary": "",
+    "category": "",
+    'author': 'DataInteger Consultancy Services LLP',
+    'maintainer': 'DataInteger Consultancy Services LLP',
+    'company': 'DataInteger Consultancy Services LLP',
+    'website': 'https://www.datainteger.com',
+    "depends": ['base', 'account', 'sale','stock','contacts'],
+    "data": [
+        "reports/header_footer_inherit_view.xml",
+        "reports/report_account_move.xml",
+        "reports/report_account_payments.xml",
+        "reports/reports.xml",
+        "security/ir.model.access.csv",
+        "views/account_journal_view.xml",
+        "views/job_code_view.xml",
+        "views/res_company_view.xml",
+        "views/res_partner_gruop.xml",
+        "views/res_partner_view.xml",
+        "views/sale_order_view.xml",
+        "views/res_partner_dir.xml",
+    ],
+    "installable": True,
+    "license": "AGPL-3",
+}

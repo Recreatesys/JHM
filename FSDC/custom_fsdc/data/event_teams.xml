@@ -1,0 +1,20 @@
+<odoo>
+
+    <record id="MP" model="event.teams">
+        <field name="name">MP</field>
+    </record>
+
+    <record id="CDA" model="event.teams">
+        <field name="name">CDA</field>
+    </record>
+
+    <record id="AWL" model="event.teams">
+        <field name="name">AWL</field>
+    </record>
+
+    <record id="PR" model="event.teams">
+        <field name="name">PR</field>
+    </record>
+
+
+</odoo>

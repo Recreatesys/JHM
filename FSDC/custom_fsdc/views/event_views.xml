@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="action_event_dashboard_view" model="ir.actions.client">
+        <field name="name">Post-Event Performance</field>
+        <field name="tag">event_dashboard_tag</field>
+    </record>
+    <menuitem name="Post-Event Performance"
+              id="event_dashboard"
+              sequence="10"
+              action="action_event_dashboard_view"
+              parent="event.event_main_menu"/>
+
+    <record id="action_view_import_events" model="ir.actions.act_window">
+        <field name="name">Import Events</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">import.event.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="view_event_form_inherit" model="ir.ui.view">
+        <field name="name">view.event.form.inherit</field>
+        <field name="model">event.event</field>
+        <field name="inherit_id" ref="event.view_event_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="one_pager_image_link"/>
+                <field name="research_paper_link"/>
+                <field name="webinar_recording_link"/>
+                <field name="zoom_meeting_link" widget="url"/>
+            </xpath>
+
+            <xpath expr="//page[@name='event_notes']" position="before">
+                <page name="mp_report" string="MP Report">
+                    <group>
+                        <field name="year"/>
+                        <field name="event_type"/>
+                        <field name="count_in_qa_paper"/>
+                        <field name="count_in_lego_questions"/>
+                        <field name="target_audience"/>
+                    </group>
+                </page>
+
+                <page name="pr_report" string="PR Report">
+                    <group>
+                        <field name="event_representatives"/>
+                        <field name="teams" widget="many2many_tags"/>
+                    </group>
+                    <group string="Industy Engagement" name="industry_engagement">
+                        <field name="new_relationships"/>
+                        <field name="existing_relationship"/>
+                        <field name="regulatory"/>
+                    </group>
+                </page>
+            </xpath>
+
+            <xpath expr="//div[@class='oe_title']" position="after">
+                <group>
+                    <field name='event_chinese_name'/>
+                </group>
+            </xpath>
+
+            <xpath expr="//field[@name='address_id']" position="after">
+                <field name="event_location"/>
+                <field name="event_chinese_location"/>
+            </xpath>
+
+            <xpath expr="//field[@name='organizer_id']" position="after">
+                <field name="organising_district"/>
+                <field name="organising_district_chinese"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <menuitem name="Import Events"
+              id="import_events"
+              action="action_view_import_events"
+              parent="event.menu_event_configuration"/>
+
+    <record id="action_create_partner_registrant" model="ir.actions.server">
+        <field name="name">Add Registrants as Contacts</field>
+        <field name="model_id" ref="event.model_event_registration"/>
+        <field name="binding_model_id" ref="event.model_event_registration"/>
+        <field name="binding_type">action</field>
+        <field name="state">code</field>
+        <field name="code">action= records.action_create_partner_from_registrants()</field>
+    </record>
+
+    <record id="action_send_daily_free_event_mails" model="ir.cron">
+        <field name="name">Event: Send Daily Free Event Mails</field>
+        <field name="model_id" ref="event.model_event_event"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_send_daily_free_event_mails()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="total_registrant" model="ir.cron">
+        <field name="name">Daily Total Registrants</field>
+        <field name="model_id" ref="event.model_event_event"/>
+        <field name="state">code</field>
+        <field name="code">model.send_total_registration_email()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="priority">3</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="action_send_absentee_emails" model="ir.cron">
+        <field name="name">Event: Send Absentees Mails</field>
+        <field name="model_id" ref="event.model_event_event"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_send_absentees_mails()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="action_send_event_reminder" model="ir.cron">
+        <field name="name">Pre-Event: Send Pre-Event Reminder 1 hour</field>
+        <field name="model_id" ref="event.model_event_event"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_send_pre_event_reminder()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">hours</field>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="action_send_event_reminder_2_days" model="ir.cron">
+        <field name="name">Pre Event: Send Pre-Event Reminder 2 days</field>
+        <field name="model_id" ref="event.model_event_event"/>
+        <field name="state">code</field>
+        <field name="code">model._cron_send_pre_event_reminder_2_days()</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">days</field>
+        <field name="active" eval="True"/>
+    </record>
+
+</odoo>

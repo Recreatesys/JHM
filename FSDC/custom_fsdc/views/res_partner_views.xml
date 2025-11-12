@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="res_partner_inherit_form_view" model="ir.ui.view">
+        <field name="name">res.partner.inherit.form.view</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='internal_notes']" position="after">
+                <page name="past_occupations" string="Past Occupation">
+                    <field name="occupation_ids" >
+                        <form string="Past Occupations">
+                            <group>
+                                <group>
+                                    <field name="occupation" string="Occupation"/>
+                                    <label for="year_start" string="Period"/>
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <field name="year_start"/>
+                                        </div>
+                                        <div class="col-auto d-flex align-items-center">
+                                            <span>-</span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <field name="year_end"/>
+                                        </div>
+                                    </div>
+                                    <field name="company_id" string="Company" options="{'no_create': True}" invisible="1"/>
+                                    <field name="partner_company_id" string="Company" />
+                                    <field name="phone" string="Phone"/>
+                                    <field name="email" string="Email"/>
+                                </group>
+                                <group>
+                                    <field name="pa_name" string="PA's Name"/>
+                                    <field name="pa_email" string="PA's Email"/>
+                                    <field name="pa_phone" string="PA's Phone Number"/>
+                                    <field name="pa_name_2" string="PA's Name 2"/>
+                                    <field name="pa_email_2" string="PA's Email 2"/>
+                                    <field name="pa_phone_2" string="PA's Phone Number 2"/>
+                                </group>
+                            </group>
+                        </form>
+                    </field>
+                </page>
+
+                <page name="alternative_contact" string="Alternative Contact Point">
+                    <group>
+                        <field name="alternative_contact_email_address" widget="email"/>
+                    </group>
+                     <group name="container_row_2">
+                        <group string="Alternative Contact 1" name="alternative_contact1" priority="1">
+                            <field name="alternative_contact_point_full_name1"/>
+                            <field name="alternative_contact_point_email1"/>
+                            <field name="alternative_contact_point_phone1" widget="phone"/>
+                            <field name="alternative_contact_point_job_title1"/>
+                        </group>
+
+                        <group string="Alternative Contact 2" name="alternative_contact2" priority="1">
+                            <field name="alternative_contact_point_full_name2"/>
+                            <field name="alternative_contact_point_email2"/>
+                            <field name="alternative_contact_point_phone2" widget="phone"/>
+                            <field name="alternative_contact_point_job_title2"/>
+                        </group>
+                    </group>
+                </page>
+
+                <page name="board_committee" string="Board &amp; Committee">
+                    <group name="container_row_2">
+                        <group string="Committee" name="committee_info" priority="1">
+                            <field name="committee_name_text"/>
+                            <field name="working_group_text"/>
+                            <field name="committee_role_text"/>
+                        </group>
+                        <group string="Board" name="board_info" priority="1">
+                            <field name="board"/>
+                        </group>
+                    </group>
+                </page>
+
+                <page name="contact_source" string="Contact Source">
+                    <group name="container_row_2">
+                        <group string="Contact Source Information" name="contact_source_info" priority="1">
+                            <field name="contact_soure_text"/>
+                            <field name="contact_type"/>
+                            <field name="marketing_consent"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+
+            <xpath expr="//span[@name='address_name']" position="before">
+                <field name='chinese_name'/>
+                <field name="first_name" invisible="is_company"/>
+                <field name="middle_name" invisible="is_company"/>
+                <field name="last_name" invisible="is_company"/>
+            </xpath>
+
+            <xpath expr="//field[@name='vat']" position="before">
+                <field name='continent'/>
+            </xpath>
+
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name='job_function'/>
+                <field name="job_seniority"/>
+                <field name='best_reached_by'/>
+            </xpath>
+
+
+            <xpath expr="//group/group[2]" position="replace">
+                <group>
+                    <field name="function" placeholder="e.g. Sales Director"
+                        invisible="is_company"/>
+                    <field name='direct_line_number' widget='phone'/>
+                    <field name="phone" widget="phone"/>
+                    <field name="mobile" widget="phone"/>
+                    <field name="fax"/>
+                    <field name="user_ids" invisible="1"/>
+                    <field name="email" widget="email" context="{'gravatar_image': True}" required="user_ids"/>
+                    <field name="website" string="Website" widget="url" placeholder="e.g. https://www.odoo.com"/>
+                    <field name="language"/>
+                    <field name="linkedin_id"/>
+                    <field name="area_of_study"/>
+                    <field name="title" options='{"no_open": True}' placeholder="e.g. Mister"
+                        invisible="is_company"/>
+                    <field name="active_lang_count" invisible="1"/>
+                    <field name="lang" invisible="active_lang_count &lt;= 1"/>
+                    <field name="category_id" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"
+                            placeholder='e.g. "B2B", "VIP", "Consulting", ...'/>
+                    <field name="sectors" widget="many2many_tags"/>
+                    <field name="fsdc_industry" widget="many2many_tags"/>
+                </group>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="view_res_partner_occupation_search" model="ir.ui.view">
+        <field name="name">res.partner.occupation.search</field>
+        <field name="model">res.partner.occupation</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="occupation" string="Occupation"/>
+                <field name="company_id" string="Company"/>
+                <filter string="Occupation" name="filter_by_occupation" domain="[('occupation', '!=', False)]"/>
+                <filter string="Company" name="filter_by_company" domain="[('company_id', '!=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+</odoo>

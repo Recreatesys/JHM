@@ -1,0 +1,528 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="custom_report_account_move" inherit_id="account.report_invoice_document">
+        <xpath expr="//div[hasclass('row')]" position="replace">
+            <t t-set="is_account_invoice" t-value="True"/>
+        </xpath>
+        <xpath expr="//div[hasclass('page')]" position="replace">
+            <div class="page">
+                <div class="row" style="border-bottom:1px solid black;margin-top:-80px">
+                    <h4>Invoice</h4>
+                </div>
+                <div class="row" style="border-bottom:1px solid black;">
+                    <table class="table table-borderless o_main_table" width="100%">
+                        <tr>
+                            <td width="20%">
+                                <span>Date :</span>
+                            </td>
+                            <td width="30%">
+                                <span t-field="o.invoice_date"/>
+                            </td>
+                            <td width="20%">
+                                <span>Invoice No. :</span>
+                            </td>
+                            <td width="30%">
+                                <span t-field="o.name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="20%">
+                                <span>Bill To :</span>
+                            </td>
+                            <td width="30%">
+                                <span t-field="o.partner_id"/>
+                            </td>
+                            <td width="20%"></td>
+                            <td width="30%"></td>
+                        </tr>
+                        <tr>
+                            <td width="20%">
+                                <span>Company Code:</span>
+                            </td>
+                            <td width="30%">
+                                <span t-field="o.company_id.company_code"/>
+                            </td>
+                            <td width="20%">
+                                <span>Job Code. :</span>
+                            </td>
+                            <td width="30%">
+                                <span t-field="o.invoice_line_ids.sale_line_ids.order_id.job_code_id"/>
+                            </td>
+                            <td width="20%"></td>
+                            <td width="30%"></td>
+                        </tr>
+                    </table>
+                </div>
+                <br/>
+                <div class="row">
+                    <table class="table table-borderless o_main_table">
+                        <tbody>
+                            <t t-foreach="o.invoice_line_ids" t-as="line">
+                                <tr>
+                                    <td class="text-left">
+                                        <t t-if="line.name">
+                                            <span t-field="line.name"/>
+                                        </t>
+                                    </td>
+                                    <td class="text-end">
+                                        <t t-if="line.currency_id">
+                                            <span t-field="line.currency_id"/>
+                                        </t>
+                                    </td>
+                                    <td class="text-end">
+                                        <t t-if="line.price_subtotal">
+                                            <span t-field="line.price_subtotal"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+                <br/>
+                <br/>
+                <div class="row" style="page-break-inside: avoid;">
+                    <div class="col-6">
+                        <span>Remark</span>
+                        <br/>
+                        <br/>
+                        <span t-field="o.narration"/>
+                    </div>
+                    <div class="col-6"/>
+                </div>
+                <br/>
+                <br/>
+                <br/>
+                <div class="row" style="border-top:1px solid black;page-break-inside: avoid;">
+                    <div class="col-7"/>
+                    <t t-if="o.currency_id.name == 'USD'">
+                        <div class="col-2">
+                            <span>Total To Receive</span>
+                            <br/>
+                            <span>or</span>
+                            <br/>
+                            <span>Total To Receive</span>
+                        </div>
+                        <div class="col-1 text-end">
+                            <strong>
+                                <span>USD</span>
+                                <br/>
+                                <span>&#160;</span>
+                                <br/>
+                                <span>HKD</span>
+                            </strong>
+                        </div>
+                        <div class="col-2 text-end">
+                            <t t-if="o.amount_total">
+                                <strong>
+                                    <span t-field="o.amount_total"/>
+                                    <br/>
+                                    <span>&#160;</span>
+                                    <br/>
+                                    <t t-set="converted_amount"
+                                       t-value="float(o.currency_id._convert(o.amount_total, o.company_id.currency_id, o.company_id, o.invoice_date))"/>
+                                    <span t-esc="converted_amount"
+                                          t-options='{"widget": "monetary", "display_currency": o.company_currency_id}'/>
+                                </strong>
+                            </t>
+                        </div>
+                    </t>
+                    <t t-elif="o.currency_id.name == 'HKD'">
+                        <div class="col-2">
+                            <span>Total To Receive</span>
+                            <br/>
+                            <span>or</span>
+                            <br/>
+                            <span>Total To Receive</span>
+                        </div>
+                        <div class="col-1 text-end">
+                            <strong>
+                                <span>HKD</span>
+                                <br/>
+                                <span>&#160;</span>
+                                <br/>
+                                <span>USD</span>
+                            </strong>
+                        </div>
+                        <div class="col-2 text-end">
+                            <t t-if="o.amount_total">
+                                <strong>
+                                    <span t-field="o.amount_total"/>
+                                    <br/>
+                                    <span>&#160;</span>
+                                    <br/>
+                                    <t t-set="usd_currency" t-value="env.ref('base.USD')"/>
+                                    <t t-set="converted_amount"
+                                       t-value="float(o.company_id.currency_id._convert(o.amount_total, usd_currency, o.company_id, o.invoice_date))"/>
+                                    <span t-esc="converted_amount"
+                                          t-options='{"widget": "monetary", "display_currency": usd_currency}'/>
+                                </strong>
+                            </t>
+                        </div>
+                    </t>
+                    <t t-else="">
+                        <div class="col-2">
+                            <span>Total To Receive</span>
+                        </div>
+                        <div class="col-1 text-end">
+                            <t t-if="o.currency_id">
+                                <strong>
+                                    <span t-field="o.currency_id"/>
+                                </strong>
+                            </t>
+                        </div>
+                        <div class="col-2 text-end">
+                            <t t-if="o.amount_total">
+                                <strong>
+                                    <span t-field="o.amount_total"/>
+                                </strong>
+                            </t>
+                        </div>
+                    </t>
+                </div>
+                <br/>
+                <div class="row" style="text-align:right;">
+                    <span style="font-weight:bold;font-size:14px;">
+                        <i>
+                            Please state with bank that the bank charges will not be deducted from the remittance.
+                        </i>
+                    </span>
+                    <br/>
+                    <span style="font-weight:bold;font-size:13px;">
+                        <i>
+                            If the received funds are not in full, we reserve the right to recharge the outstanding
+                            amount, along with an additional administration fee of USD40.
+                        </i>
+                    </span>
+                </div>
+
+                <t t-if="o.journal_id.branch_type == 'hong_kong'">
+                    <small>
+                        <div class="row" style="page-break-before:always;margin-top:30px;">
+                            <strong>[ IMPORTANT NOTES ]</strong>
+                            <br/>
+                            <span>** The HKD equivalent is calculated at a fixed rate of USD 1.00 to HKD <t t-if="request.env['res.currency'].search([('name', '=', 'USD')])" t-esc="'{:.2f}'.format(request.env['res.currency'].search([('name', '=', 'USD')]).rate_ids[0].inverse_company_rate)"/></span>
+                            <br/>
+                            <span>
+                                Asia Business Centre (Holdings) Limited reserves the right to recalculate at the current
+                                market rate. **
+                            </span>
+                        </div>
+                        <br/>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <strong>
+                                    <span>[PAYMENT DETAILS]</span>
+                                </strong>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-7">
+                                <strong>
+                                    <u>1. Bank Transfer (HKD/USD/EUR/RMB)</u>
+                                </strong>
+                            </div>
+                            <div class="col-5">
+                                <strong>
+                                    <u>or Scan QR Code to Pay by Payme (HKD)</u>
+                                </strong>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-2">
+                                <span style="padding-right:20px">Account No.:</span>
+                                <br/>
+                                <span style="padding-right:20px">Beneficiary:</span>
+                                <br/>
+                                <span style="padding-right:20px">Branch Address:</span>
+                                <br/>
+                                <span style="padding-right:20px">Beneficiary's Bank:</span>
+                                <br/>
+                                <span style="padding-right:20px">SWIFT Code:</span>
+                                <br/>
+                                <span style="padding-right:20px">Bank Code:</span>
+                                <br/>
+                                <span style="padding-right:20px">Payment Charge:</span>
+                            </div>
+                            <div class="col-5">
+                                <span>808-553630-838</span>
+                                <br/>
+                                <span>Asia Business Centre (Holdings) Limited</span>
+                                <br/>
+                                <span>1 Queen's Road Central, Hong Kong</span>
+                                <br/>
+                                <span>HSBC Hong Kong</span>
+                                <br/>
+                                <span>HSBCHKHHΗΚΗ</span>
+                                <br/>
+                                <span>004</span>
+                                <br/>
+                                <span>OUR-Local &amp; Overseas bank charge paid by applicant</span>
+                            </div>
+                            <div class="col-5 text-center">
+                                <br/>
+                                <img t-if="o.journal_id.qr_payme" t-att-src="image_data_uri(o.journal_id.qr_payme)"
+                                     alt="Qr Code Not Found." style="max-height:100;max-width:100px;"/>
+                            </div>
+                        </div>
+                        <br/>
+
+                        <div class="row">
+                            <strong>
+                                <u>2. Cheque</u>
+                            </strong>
+                            <br/>
+                            <span>
+                                Please make the cheque payable to "Asia Business Centre (Holdings) Limited", please send
+                                crossed cheque to:
+                            </span>
+                            <br/>
+                            <t t-if="o.journal_id.street">
+                                <span t-field="o.journal_id.street"/>
+                            </t>
+                            <t t-if="o.journal_id.street2">
+                                <span t-field="o.journal_id.street2"/>
+                            </t>
+                            <t t-if="o.journal_id.city">
+                                <span t-field="o.journal_id.city"/>
+                            </t>
+                            <t t-if="o.journal_id.state_id">
+                                <span t-field="o.journal_id.state_id"/>
+                            </t>
+                            <t t-if="o.journal_id.zip">
+                                <span t-field="o.journal_id.zip"/>
+                            </t>
+                            <t t-if="o.journal_id.country_id">
+                                <span t-field="o.journal_id.country_id"/>
+                            </t>
+                        </div>
+                        <br/>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <strong>
+                                    <u>3. Faster Payment System (FPS)</u>
+                                </strong>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-2">
+                                <span>Email:</span>
+                                <br/>
+                                <span>FPS ID:</span>
+                            </div>
+                            <div class="col-5">
+                                <span>bank@asiabc.com.hk</span>
+                                <br/>
+                                <span>106449465</span>
+                            </div>
+                            <div class="col-5"></div>
+                        </div>
+                        <br/>
+
+                        <div class="row">
+                            <strong>
+                                <u>4. Paypal (6.5% additional service fee is required)</u>
+                            </strong>
+                        </div>
+
+                        <t t-if="o.currency_id.name == 'USD'">
+                            <div class="row">
+                                <div class="col-2">
+                                    <span>Account Name:</span>
+                                    <br/>
+                                    <span>Total:</span>
+                                    <br/>
+                                    <span>Total:</span>
+                                </div>
+                                <div class="col-5">
+                                    <span>business@asiabc.com.hk</span>
+                                    <br/>
+                                    <span>HKD</span>
+                                    <t t-set="additional_amount_hkd" t-value="converted_amount * 0.065"/>
+                                    <t t-set="final_amount_hkd" t-value="converted_amount + additional_amount_hkd"/>
+                                    <t t-esc="'%.2f'% final_amount_hkd"/>
+                                    <br/>
+                                    <span>USD</span>
+                                    <t t-set="additional_amount_usd" t-value="o.amount_total * 0.065"/>
+                                    <t t-set="final_amount_usd" t-value="o.amount_total + additional_amount_usd"/>
+                                    <t t-esc="'%.2f'% final_amount_usd"/>
+                                </div>
+                                <div class="col-5"></div>
+                            </div>
+                        </t>
+                        <t t-elif="o.currency_id.name == 'HKD'">
+                            <div class="row">
+                                <div class="col-2">
+                                    <span>Account Name:</span>
+                                    <br/>
+                                    <span>Total:</span>
+                                    <br/>
+                                    <span>Total:</span>
+                                </div>
+                                <div class="col-5">
+                                    <span>business@asiabc.com.hk</span>
+                                    <br/>
+                                    <t t-if="o.amount_total">
+                                        <span>HKD</span>
+                                        <t t-set="additional_amount_hkd" t-value="o.amount_total * 0.065"/>
+                                        <t t-set="final_amount_hkd" t-value="o.amount_total + additional_amount_hkd"/>
+                                        <t t-esc="'%.2f'% final_amount_hkd"/>
+                                        <br/>
+                                        <span>USD</span>
+                                        <t t-set="additional_amount_usd" t-value="converted_amount * 0.065"/>
+                                        <t t-set="final_amount_usd" t-value="converted_amount + additional_amount_usd"/>
+                                        <t t-esc="'%.2f'% final_amount_usd"/>
+                                    </t>
+
+                                </div>
+                                <div class="col-5"></div>
+                            </div>
+                        </t>
+
+                        <t t-else="">
+                            <div class="row">
+                                <div class="col-2">
+                                    <span>Account Name:</span>
+                                    <br/>
+                                    <span>Total:</span>
+                                </div>
+                                <div class="col-5">
+                                    <span>business@asiabc.com.hk</span>
+                                    <br/>
+                                    <span t-field="o.currency_id"/>
+                                    <t t-set="additional_amount" t-value="o.amount_total * 0.065"/>
+                                    <t t-set="final_amount" t-value="o.amount_total + additional_amount"/>
+                                    <t t-esc="'%.2f'% final_amount"/>
+                                </div>
+                                <div class="col-5"></div>
+                            </div>
+                        </t>
+                        <br/>
+
+                        <div class="row">
+                            <div class="col-12">
+                                <strong>
+                                    <u>5. Scan QR Code to Pay by Alipay</u>
+                                </strong>
+                                <br/>
+                                <span>(1.05% additional service fee is required)</span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <t t-if="o.currency_id.name == 'USD'">
+                                <div class="col-2">
+                                    <span>Total:</span>
+                                </div>
+                                <div class="col-5">
+                                    <span style="padding-right:10px">HKD</span>
+                                    <t t-set="additional_amount_hkd" t-value="converted_amount * 0.0105"/>
+                                    <t t-set="final_amount_hkd" t-value="converted_amount + additional_amount_hkd"/>
+                                    <t t-esc="'%.2f'% final_amount_hkd"/>
+                                </div>
+                            </t>
+                            <t t-elif="o.currency_id.name == 'HKD'">
+                                <div class="col-2">
+                                    <span>Total:</span>
+                                </div>
+                                <div class="col-5">
+                                    <span style="padding-right:10px">HKD</span>
+                                    <t t-set="additional_amount_hkd" t-value="o.amount_total * 0.0105"/>
+                                    <t t-set="final_amount_hkd" t-value="o.amount_total + additional_amount_hkd"/>
+                                    <t t-esc="'%.2f'% final_amount_hkd"/>
+                                </div>
+                            </t>
+                            <t t-else="">
+                                <div class="col-2">
+                                    <span>Total:</span>
+                                </div>
+                                <div class="col-5">
+                                    <span t-field="o.currency_id"/>
+                                    <t t-set="additional_amount" t-value="o.amount_total * 0.0105"/>
+                                    <t t-set="final_amount" t-value="o.amount_total + additional_amount"/>
+                                    <t t-esc="'%.2f'% final_amount"/>
+                                </div>
+                            </t>
+                            <div class="col-5"></div>
+                        </div>
+                        <br/>
+
+                        <div class="row" style="text-align:center">
+                            <span>See on this code</span>
+                            <br/>
+                            <span>Via Alipay</span>
+                        </div>
+
+                        <div class="row">
+                            <img t-if="o.journal_id.logo" t-att-src="image_data_uri(o.journal_id.logo)"
+                                 alt="Logo" style="max-height:100;max-width:100px;padding-right:20px"/>
+                            <img t-if="o.journal_id.qr_alipay" t-att-src="image_data_uri(o.journal_id.qr_alipay)"
+                                 alt="Qr Code Not Found." style="max-height:100;max-width:100px;"/>
+                        </div>
+
+                        <div class="row">
+                            <span>Note:</span>
+                            <br/>
+                            <span>1. Please state the invoice number with your payment and send an independent
+                                remittance
+                                advice/bank-in slip by email to finance@asiabc.com.hk
+                            </span>
+                            <br/>
+                            <span>
+                                2. We reserve the right to put the service on hold until the outstanding amount is
+                                settled.
+                            </span>
+                        </div>
+                    </small>
+                </t>
+
+                <t t-if="o.journal_id.branch_type == 'singapore'">
+                    <div class="row" style="page-break-before:always;padding-top:100px;">
+                        <span style="font-weight:bold">PAYMENT DETAILS:</span>
+                        <br/>
+                        <span>
+                            <u>Bank Transfer (SGD/USD)</u>
+                        </span>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <span>Account No.:</span>
+                            <br/>
+                            <span>Beneficiary:</span>
+                            <br/>
+                            <span>Branch Address:</span>
+                            <br/>
+                            <span>Beneficiary's Bank:</span>
+                            <br/>
+                            <span>SWIFT code:</span>
+                        </div>
+                        <div class="col-6">
+                            <span>687816389001 (SGD) // 501249809301 (USD)</span>
+                            <br/>
+                            <span>ASIA BUSINESS CENTRE (SINGAPORE) PTE. LIMITED</span>
+                            <br/>
+                            <span>65 Chulia St, #01-00, Singapore 049513</span>
+                            <br/>
+                            <span>OCBC Singapore</span>
+                            <br/>
+                            <span>OCBCSGSG</span>
+                        </div>
+                        <div class="col-3"/>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <span>
+                            *We MUST receive the invoiced amount without deduction of bank charges. This should be
+                            stated clear in the instructions to the remitting bank.*
+                        </span>
+                    </div>
+                </t>
+            </div>
+        </xpath>
+    </template>
+</odoo>

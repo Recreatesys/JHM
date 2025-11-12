@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="inherit_view_partner_form_views" model="ir.ui.view">
+        <field name="name">inherit.vire.partner.form.views</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//notebook//page[@name='contact_addresses']//form//field[@name='name']" position="after">
+                <field name="mapped_partner_id" domain="[('is_company', '=', False)]" invisible="type != 'contact'"/>
+            </xpath>
+
+            <xpath expr="//notebook//page[@name='internal_notes']" position="after">
+                <page name='mapped_companies' string="Companies" invisible="is_company == True">
+                    <field name="mapped_partner_company_ids" no_label="1">
+                        <list>
+                            <field name='name' string='Company Name'/>
+                            <field name='email' string='Email'/>
+                            <field name='phone' string='Phone'/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+
+            <xpath expr="//page[@name='sales_purchases']//group[@name='misc']//field[@name='ref']" position="after">
+                <field name="registration_date"/>
+                <field name="ptr_letter_date"/>
+                <field name="last_audit_report_ytd"/>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

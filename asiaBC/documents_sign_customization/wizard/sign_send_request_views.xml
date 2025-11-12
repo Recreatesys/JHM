@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="inherit_sign_send_request_form_view" model="ir.ui.view">
+        <field name="name">inherit.sign.send.request.form.view</field>
+        <field name="model">sign.send.request</field>
+        <field name="inherit_id" ref="sign.sign_send_request_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form//group//field[@name='signer_ids']" position="after">
+                <field name="default_director_domain_ids" invisible="1"/>
+                <field name="default_director_id" required="1"
+                       domain="[('id', 'in', default_director_domain_ids)]"
+                       options="{'no_create': True, 'no_open': True}"/>
+            </xpath>
+            <xpath expr="//form//group//field[@name='signer_ids']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//form//group//field[@name='partner_company_id']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+            <xpath expr="//form//notebook" position="inside">
+                    <page string="Customer Details">
+                        <field name="placeholder_mapped_ids">
+                            <list string="Details" editable="bottom">
+                                <field name="placeholder_domain_ids" widget="Many2many_tags" column_invisible="1"/>
+                                <field name="director_domain_ids" widget="Many2many_tags" column_invisible="1"/>
+                                <field name="sign_item_type_id" options="{'no_create': True, 'no_open': True}" domain="[('id', 'in', placeholder_domain_ids)]"/>
+                                <field name="director_id" options="{'no_create': True, 'no_open': True}" domain="[('id', 'in', director_domain_ids)]"/>
+                            </list>
+                        </field>
+                    </page>
+            </xpath>
+            <xpath expr="//form" position="inside">
+                <notebook invisible="not context.get('sign_directly_without_mail',False)">
+                    <page string="Customer Details">
+                        <field name="placeholder_mapped_ids">
+                            <list string="Details" editable="bottom">
+                                <field name="placeholder_domain_ids" widget="Many2many_tags" column_invisible="1"/>
+                                <field name="director_domain_ids" widget="Many2many_tags" column_invisible="1"/>
+                                <field name="sign_item_type_id" options="{'no_create': True, 'no_open': True}" domain="[('id', 'in', placeholder_domain_ids)]"/>
+                                <field name="director_id" options="{'no_create': True, 'no_open': True}" domain="[('id', 'in', director_domain_ids)]"/>
+                            </list>
+                        </field>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+</odoo>

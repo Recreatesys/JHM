@@ -1,0 +1,29 @@
+.badge-success {
+    color: #fff;
+    background-color: #28a745;
+}
+
+.badge-primary {
+    color: #714b67;
+    background-color: #007bff;
+}
+
+.badge-danger {
+    color: #fff;
+    background-color: #dc3545;
+}
+
+.badge-warning {
+    color: #212529;
+    background-color: #ffc107;
+}
+
+.badge-light {
+    color: #212529;
+    background-color: #f8f9fa;
+}
+
+.badge-info {
+    color: #fff;
+    background-color: #17a2b8;
+}

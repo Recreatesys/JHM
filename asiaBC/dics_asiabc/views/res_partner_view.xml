@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_partner_form_inherit_group" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.group</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='parent_id']" position="attributes">
+                <attribute name="domain">[('id', 'in', available_parent_ids)]</attribute>
+                <attribute name="string">Default Parent</attribute>
+                <attribute name="placeholder">Default Parent</attribute>
+            </xpath>
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="asiaBC_hotline" invisible="not is_company"/>
+                <field name="group_id"/>
+                <field name="group_status"/>
+                <field name="parent_company_ids" widget="many2many_tags" invisible="not is_company"/>
+                <field name="available_parent_ids" widget="many2many_tags" invisible="1"/>
+                <field name="director_ids" widget="many2many_tags" invisible="not is_company"/>
+<!--                <field name="name" readonly="1"/>-->
+            </xpath>
+
+            <xpath expr="//span[@name='address_name']" position="before">
+                <field name='chinese_name'/>
+            </xpath>
+
+            <xpath expr="//field[@name='vat']" position="before">
+                <field name="first_name" invisible="is_company"/>
+                <field name="last_name" invisible="is_company"/>
+                <field name="director_name" invisible="is_company"/>
+                <field name="director_eff_date" invisible="is_company"/>
+                <field name="passport_no" invisible="is_company"/>
+                <field name="nationality" invisible="is_company"/>
+                <field name="cr_personal_login" invisible="is_company"/>
+                <field name="password" invisible="is_company"/>
+                <field name="passport_exp_date" options="{'datepicker':{'minDate': 0}}" invisible="is_company"/>
+                <field name="is_director" invisible="is_company"/>
+                <field name="contact_code" invisible="not is_company"/>
+            </xpath>
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="certificate_number" invisible="is_company"/>
+            </xpath>
+            <xpath expr="//field[@name='category_id']" position="after">
+                <field name="instant_messaging" string="Instant Messaging" invisible="not is_company"/>
+            </xpath>
+            <xpath expr="//field[@name='website']" position="before">
+                <field name="email2" string="Email 2" invisible="not is_company"/>
+            </xpath>
+            <xpath expr="//field[@name='industry_id']" position="after">
+                <field name="CI"/>
+                <field name="BR"/>
+                <field name="Registration_date"/>
+                <field name="early_renewal_reminder"/>
+                <field name="renewal_date"/>
+                <field name="occupation" string="Occupation" invisible="1"/>
+                <field name="date_enter_member" string="Date Entered as a Member" invisible="1"/>
+                <field name="date_acquired_shares" string="Date of Acquired Shares" invisible="1"/>
+                <field name="certificate_number_com" string="Certificate Number" invisible="1"/>
+                <field name="disc_number_share_from" string="Distinctive nos.of Shares from" invisible="1"/>
+                <field name="disc_number_share_to" string="Distinctive nos.of Shares to" invisible="1"/>
+                <field name="share_no" string="No of Shares" invisible="1"/>
+                <field name="cons_paid_currency" string="Consideration Paid Currency" invisible="1"/>
+                <field name="cons_paid_amount" string="Consideration Paid Amount" invisible="1"/>
+                <field name="com_remarks" string="Com Sec Remarks" invisible="1"/>
+            </xpath>
+            <xpath expr="//page[@name='internal_notes']" position="after" >
+                <page name="com-sec" string="Com-Sec"  invisible="not is_company">
+                    <field name="shares_ids" widget="one2many">
+                        <list editable="bottom">
+                            <field name="partner_share_id" string="Parent Contact" domain="[('id', 'in', partner_contact_ids)]"/>
+                            <field name="partner_contact_ids" string="Parent Contact" column_invisible="True"/>
+                            <field name="occupation" string="Occupation"/>
+                            <field name="date_enter_member" string="Date Entered as a Member"/>
+                            <field name="date_acquired_shares" string="Date of Acquired Shares"/>
+                            <field name="certificate_number_com" string="Certificate Number"/>
+                            <field name="disc_number_share_from" string="Distinctive nos.of Shares from"/>
+                            <field name="disc_number_share_to" string="Distinctive nos.of Shares to"/>
+                            <field name="share_no" string="No of Shares"/>
+                            <field name="cons_paid_currency" string="Consideration Paid Currency"/>
+                            <field name="cons_paid_amount" string="Consideration Paid Amount"/>
+                            <field name="com_remarks" string="Com Sec Remarks"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+            <xpath expr="//page[@name='internal_notes']" position="after" >
+                <page name="service" string="Services" invisible="not is_company">
+                    <group class="o_row">
+                        <group>
+                            <field name="jurisdiction" string="Jurisdiction"/>
+                            <field name="agent" string="Agent"/>
+                            <field name="is_service_office"/>
+                            <field name="is_ird"/>
+                            <field name="is_comsec"/>
+                            <field name="is_doc_scan"/>
+                        </group>
+                        <group>
+                            <field name="is_bank_account"/>
+                            <field name="is_company_chop"/>
+                            <field name="chop_details" string="Chop Details"/>
+                            <field name="other" string="Other"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr="//form//group/field[@name='name']" position="after">
+                <field name="first_name"/>
+                <field name="last_name"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="inherit_view_partner_tree_views" model="ir.ui.view">
+        <field name="name">inherit.vire.partner.list.views</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='complete_name']" position="after">
+                <field name='chinese_name' optional="show"/>
+                <field name="director_company_count" optional="show"/>
+                <field name="company_registry" optional="show"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

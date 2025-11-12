@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="event_view_form" model="ir.ui.view">
+        <field name="name">event.event.form.inherit.event.crm</field>
+        <field name="model">event.event</field>
+        <field name="inherit_id" ref="event.view_event_form"/>
+        <field name="priority" eval="30"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='%(event.act_event_registration_from_event)d']/field[@name='seats_taken']"
+                   position="attributes">
+                <attribute name="string">Registrants</attribute>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="%(event.act_event_registration_from_event)d"
+                        type="action"
+                        context="{'search_default_event_id': id, 'default_event_id': id, 'search_default_attended': 1}"
+                        class="oe_stat_button"
+                        icon="fa-users"
+                        help="Total attendees for this Event">
+                    <field name="actual_attendee_count" widget="statinfo" string="Attendees"/>
+                </button>
+            </xpath>
+            <xpath expr="//notebook/page[@name='event_communication']" position="after">
+                <page string="Source Tracking Link" name="source_tracking">
+                    <field name="zoom_tracking_source_ids">
+                        <list editable="bottom">
+                            <field name="utm_source_id"/>
+                            <field name="tracking_link"/>
+                            <field name="registration_count"/>
+                            <field name="visitor_count"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+    <record id="action_run_zoom_sync" model="ir.actions.server">
+        <field name="name">Sync Zoom Webinars</field>
+        <field name="model_id" ref="event.model_event_event"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = model.run_zoom_integration()
+        </field>
+    </record>
+
+    <record id="fsdc_custom_event_kanban_view" model="ir.ui.view">
+    <field name="name">event.event.kanban.inherit.registrants</field>
+    <field name="model">event.event</field>
+    <field name="inherit_id" ref="event.view_event_kanban"/>
+    <field name="arch" type="xml">
+         <xpath expr="//div[@class='d-flex ps-1'][.//i[contains(@class, 'fa-group')]]" position="replace">
+            <div class="d-flex ps-1">
+                <i class="fa fa-group mt-1 me-2 text-center" title="Registrants"/>
+                <!-- <span t-out="record.seats_taken.raw_value" class="me-1"/> Registrants -->
+            </div>
+        </xpath>
+    </field>
+</record>
+
+
+    <menuitem id="menu_event_sync_zoom"
+              name="Zoom Integration"
+              parent="event.event_main_menu"
+              action="action_run_zoom_sync"
+              sequence="100"/>
+
+</odoo>

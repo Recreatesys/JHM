@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="sign_send_request_inherit_view_form" model="ir.ui.view">
+        <field name="name">sign.send.request.form.inherit</field>
+        <field name="model">sign.send.request</field>
+        <field name="inherit_id" ref="sign.sign_send_request_view_form"/>
+        <field name="arch" type="xml">
+            <field name="signer_ids" position="after">
+                <field name="partner_company_id"/>
+            </field>
+            <xpath expr="//footer" position="inside">
+                <button string="Generate Document &amp; Not send" name="generate_document_without_mail" type="object" class="btn-primary" context="{'no_sign_mail': True, 'sign_all': True}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

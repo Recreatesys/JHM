@@ -1,0 +1,403 @@
+<odoo>
+    <data>
+        <!--DAILY FREE EVENTS-->
+        <record id="email_template_daily_free_events" model="mail.template">
+            <field name="name">Daily Free Events Summary</field>
+            <field name="model_id" ref="event.model_event_event"/>
+            <field name="subject">Free Event Registrations Summary</field>
+            <field name="email_from">{{ user.company_id.email }}</field>
+            <field name="email_to">{{ object.user_id.email_formatted }}</field>
+            <field name="body_html" type="html">
+                <h2 class="text-primary">Daily Free Events Summary - <t t-out="ctx.get('default_today_date') or ''"/></h2>
+                <p class="mb-3">Hello <t t-out="object.user_id.name"/></p>
+                <p>Here's your summary of ongoing <strong>free events</strong> and their registration status for today:</p>
+                <t t-if="ctx.get('default_event_data') and len(ctx.get('default_event_data')) > 0">
+                    <div style="font-family: Arial, sans-serif;">
+                        <t t-foreach="ctx['default_event_data']" t-as="ev">
+                            <div style="
+                background-color: #f9f9f9;
+                border: 1px solid #ddd;
+                border-radius: 8px;
+                padding: 16px;
+                margin-bottom: 20px;
+                max-width: 20%;
+                box-shadow: 1px 1px 6px rgba(0,0,0,0.05);">
+
+                                <h2 style="
+                    color: #34495e;
+                    font-size: 18px;
+                    margin-bottom: 12px;
+                    border-bottom: 1px solid #ccc;
+                    padding-bottom: 6px;">
+                                    <t t-out="ev['name']"/>
+                                </h2>
+
+                                <p style="margin: 6px 0;">
+                                    <strong>Total Registrations:</strong>
+                                    <span style="color: #2c3e50;"><t t-out="ev['total_registrations']"/></span>
+                                </p>
+
+                                <p style="margin: 6px 0;">
+                                    <strong>Today's Registrations:</strong>
+                                    <span style="color: #2c3e50;"><t t-out="ev['today_total_registrations']"/></span>
+                                </p>
+                            </div>
+                        </t>
+                    </div>
+                </t>
+                <t t-else="">
+                    <p class="text-muted">No free events Found for today.</p>
+                </t>
+                <p class="mt-4">Best regards,<br/><strong>Odoo System</strong></p>
+            </field>
+        </record>
+
+        <!-- PAID EVENTS-->
+        <record id="email_template_event_summary" model="mail.template">
+            <field name="name">Event Registration Summary</field>
+            <field name="model_id" ref="event.model_event_event"/>
+            <field name="subject">Daily Registration Summary</field>
+            <field name="email_from">{{ user.company_id.email }}</field>
+            <field name="email_to">{{ object.user_id.email_formatted }}</field>
+            <field name="body_html" type="html">
+                <div>
+                    <p>Dear <t t-out="object.user_id.name"/>,</p>
+                    <p>Here's your <strong>daily summary</strong> for the event <strong><t t-out="ctx.get('name')"/></strong>:</p>
+                    <ul>
+                        <li><strong>New Registrations Today:</strong><t t-out="ctx.get('new_regs')"/></li>
+                        <li><strong>Total Registrations:</strong><t t-out="ctx.get('total_regs')"/></li>
+                    </ul>
+                    <p>Keep up the great work!</p>
+                    <p>Regards,<br/>Odoo Automated Report System</p>
+                </div>
+            </field>
+        </record>
+
+        <!-- POST EVENT ABSENTEES MAIL-->
+        <record id="email_template_absentees_mail" model="mail.template">
+            <field name="name">Post-Event Email: Absentees Email</field>
+            <field name="model_id" ref="event.model_event_registration"/>
+            <field name="subject">We missed you at  {{ object.event_id.name }}</field>
+            <field name="email_from">{{ user.company_id.email }}</field>
+            <field name="email_to">{{ object.email }}</field>
+            <field name="body_html" type="html">
+                <div class="container" style="max-width: 600px; background-color: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-bottom: 20px;">
+                        <div style="flex: 1; text-align: left;">
+                            <t t-if="object.event_id.company_id.logo">
+                                <img t-att-src="'/logo.png?company=%s' % object.event_id.company_id.id" alt="Company Logo" style="padding: 0px; margin: 0px; height: auto; width: 80px;"/>
+                            </t>
+                        </div>
+                        <div style="flex: 2; text-align: right; font-weight: bold; font-size: 18px; color: #b90034;">
+                            Financial Services Development Council
+                        </div>
+                    </div>
+                    <div>
+                        <p>Dear <t t-out="object.name"/>,</p>
+                        <p>We noticed you couldn't attend the event <strong><t t-out="object.event_id.name"/></strong>.</p>
+                        <p>We hope everything is okay. We'd still love your feedback or invite you to upcoming events.</p>
+                        <p>In case you missed it, here are some helpful links
+                            <li><a t-att-href="object.event_id.one_pager_image_link" target="_blank" class="text-info">One Pager</a></li>
+                            <li><a t-att-href="object.event_id.research_paper_link" target="_blank" class="text-info">Research Paper</a></li>
+                            <li><a t-att-href="object.event_id.webinar_recording_link" target="_blank" class="text-info">Webinar Recording</a></li>
+                        </p>
+                        <p>Regards,<br/><t t-out="object.company_id.name"/></p>
+                    </div>
+                    <div style="text-center border-top: 1px solid #ddd; padding-top: 15px; font-size: 12px; color: #714B67;">
+                        <div class="text-center mb-3">
+                            <t t-if="object.event_id.company_id.social_linkedin" style="background-color:white !important;">
+                                <a t-att-href="object.event_id.company_id.social_linkedin" target="_blank" style="margin: 0 5px;">
+                                    <img src="/custom_fsdc/static/src/img/linkedin.png" alt="LinkedIn" width="24" height="24"/>
+                                </a>
+                            </t>
+                            <t t-if="object.event_id.company_id.social_twitter" style="background-color:white !important;">
+                                <a t-att-href="object.event_id.company_id.social_twitter" target="_blank" style="margin: 0 5px;">
+                                    <img src="/custom_fsdc/static/src/img/twitter.png" alt="Twitter" width="24" height="24" />
+                                </a>
+                            </t>
+                            <t t-if="object.event_id.company_id.social_youtube" style="background-color:white !important;">
+                                <a t-att-href="object.event_id.company_id.social_youtube" target="_blank" style="margin: 0 5px;">
+                                    <img src="/custom_fsdc/static/src/img/youtube.png" alt="YouTube" width="24" height="24"/>
+                                </a>
+                            </t>
+                        </div>
+                        <div class="text-center">
+                            <a href="https://www.fsdc.org.hk/en/privacy-policy/" target="_blank" style="color:#714B67; text-decoration:none;">Privacy Policy</a>
+                            |
+                            <a href="https://www.fsdc.org.hk/en/disclaimer/" target="_blank" style="color:#714B67; text-decoration:none;">Terms and Conditions</a>
+                        </div>
+                        <div class="text-center">
+                            <a href="https://www.fsdc.org.hk/en/privacy-policy/" target="_blank" style="color:#714B67; text-decoration:none;">Unsubscribe</a>
+                            <p style="color: black;">Copyright © 2025 Financial Services Development Council. All rights reserved.</p>
+                        </div>
+                    </div>
+                </div>
+            </field>
+        </record>
+
+        <!--POST EVENT ATTENDED MAIL-->
+        <record id="email_template_thankyou_mail" model="mail.template">
+            <field name="name">Post-Event Email: Thankyou Email</field>
+            <field name="model_id" ref="event.model_event_registration"/>
+            <field name="subject">Thankyou for attending {{ object.event_id.name }}</field>
+            <field name="email_from">{{ user.company_id.email }}</field>
+            <field name="email_to">{{ object.email }}</field>
+            <field name="body_html" type="html">
+                <div class="container" style="max-width: 600px; background-color: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-bottom: 20px;">
+                    <div style="flex: 1; text-align: left;">
+                        <t t-if="object.event_id.company_id.logo">
+                            <img t-att-src="'/logo.png?company=%s' % object.event_id.company_id.id" alt="Company Logo" style="padding: 0px; margin: 0px; height: auto; width: 80px;"/>
+                        </t>
+                    </div>
+                    <div style="flex: 2; text-align: right; font-weight: bold; font-size: 18px; color: #b90034;">
+                        Financial Services Development Council
+                    </div>
+                </div>
+                    <div>
+                        <p>Hello <t t-out="object.name"/>,</p>
+                        <p>Thank you for attending the event <strong><t t-out="object.event_id.name"/></strong>.</p>
+                        <p>We hope you had a great experience and found it valuable. We'd love to hear your feedback or see you at future events.</p>
+                        <p>Here are Some follow-up resources you might find useful
+                            <li><a t-att-href="object.event_id.one_pager_image_link" target="_blank" class="text-info">One Pager</a></li>
+                            <li><a t-att-href="object.event_id.research_paper_link" target="_blank" class="text-info">Research Paper</a></li>
+                            <li><a t-att-href="object.event_id.webinar_recording_link" target="_blank" class="text-info">Webinar Recording</a></li>
+                        </p>
+                        <p>Stay connected!</p>
+                        <p>Warm Regards,<br/><t t-out="object.company_id.name"/></p>
+                    </div>
+                    <div style="text-center border-top: 1px solid #ddd; padding-top: 15px; font-size: 12px; color: #714B67;">
+                        <div class="text-center mb-3">
+                            <t t-if="object.event_id.company_id.social_linkedin" style="background-color:white !important;">
+                                <a t-att-href="object.event_id.company_id.social_linkedin" target="_blank" style="margin: 0 5px;">
+                                    <img src="/custom_fsdc/static/src/img/linkedin.png" alt="LinkedIn" width="24" height="24"/>
+                                </a>
+                            </t>
+                            <t t-if="object.event_id.company_id.social_twitter" style="background-color:white !important;">
+                                <a t-att-href="object.event_id.company_id.social_twitter" target="_blank" style="margin: 0 5px;">
+                                    <img src="/custom_fsdc/static/src/img/twitter.png" alt="Twitter" width="24" height="24" />
+                                </a>
+                            </t>
+                            <t t-if="object.event_id.company_id.social_youtube" style="background-color:white !important;">
+                                <a t-att-href="object.event_id.company_id.social_youtube" target="_blank" style="margin: 0 5px;">
+                                    <img src="/custom_fsdc/static/src/img/youtube.png" alt="YouTube" width="24" height="24"/>
+                                </a>
+                            </t>
+                        </div>
+                        <div class="text-center">
+                            <a href="https://www.fsdc.org.hk/en/privacy-policy/" target="_blank" style="color:#714B67; text-decoration:none;">Privacy Policy</a>
+                            |
+                            <a href="https://www.fsdc.org.hk/en/disclaimer/" target="_blank" style="color:#714B67; text-decoration:none;">Terms and Conditions</a>
+                        </div>
+                        <div class="text-center">
+                            <a href="https://www.fsdc.org.hk/en/privacy-policy/" target="_blank" style="color:#714B67; text-decoration:none;">Unsubscribe</a>
+                            <p style="color: black;">Copyright © 2025 Financial Services Development Council. All rights reserved.</p>
+                        </div>
+                    </div>
+                </div>
+            </field>
+        </record>
+
+        <!--PRE EVENT MAIL REMINDER 1 HOUR-->
+        <record id="mail_template_pre_event_reminder" model="mail.template">
+            <field name="name">Pre-Event Email Reminder: Before 1 Hour </field>
+            <field name="model_id" ref="event.model_event_registration"/>
+            <field name="subject">Your event {{ object.event_id.name }} Starts Soon!</field>
+            <field name="email_from">{{ user.company_id.email }}</field>
+            <field name="email_to">{{ object.email }}</field>
+            <field name="body_html" type="html">
+                <div class="container" style="max-width: 600px; background-color: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-bottom: 20px;">
+                        <div style="flex: 1; text-align: left;">
+                            <t t-if="object.event_id.company_id.logo">
+                                <img t-att-src="'/logo.png?company=%s' % object.event_id.company_id.id" alt="Company Logo" style="padding: 0px; margin: 0px; height: auto; width: 80px;"/>
+                            </t>
+                        </div>
+                        <div style="flex: 2; text-align: right; font-weight: bold; font-size: 18px; color: #b90034;">
+                            Financial Services Development Council
+                        </div>
+                    </div>
+                    <div class="text-center mb-4 mt-3">
+                        <h1 class="text-white bg-primary p-3 rounded">Event Reminder: 1 hour</h1>
+                    </div>
+                    <div>
+                        <h2>Hello <t t-out="object.name"/>,</h2>
+                        <p>This is a friendly reminder that your registered event <strong><t t-out="object.event_id.name"/></strong> will begin in 1 hour.</p>
+                        <ul class="list-unstyled">
+                            <li><strong>Event Date: </strong> <t t-out="object.event_id.date_begin"/></li>
+                            <li><strong>Location: </strong> <t t-out="object.event_id.zoom_meeting_link"/></li>
+                        </ul>
+                        <p>We look forward to your participation!</p>
+                    </div>
+                    <div class="text-center mt-4" style="border-top: 1px solid #eee; padding-top: 10px;">
+                        <p>Thank you for being a part of <t t-out="object.event_id.name"/> . We can't wait to see you there!</p>
+                        <p>If you have any questions, please feel free to contact us at<br/> <a t-att-href="'mailto:' + object.event_id.company_id.email" class="text-info"><t t-out="object.event_id.company_id.email"/></a>.</p>
+                        <p>Best Regards,<br/><t t-out="object.company_id.name"/></p>
+                    </div>
+                    <div class="text-center mt-3" style="border-top: 1px solid #ddd; padding-top: 15px; font-size: 12px; color: #714B67;">
+                        <div class="text-center mb-3">
+                            <t t-if="object.event_id.company_id.social_linkedin" style="background-color:white !important;">
+                                <a t-att-href="object.event_id.company_id.social_linkedin" target="_blank" style="margin: 0 5px;">
+                                    <img src="/custom_fsdc/static/src/img/linkedin.png" alt="LinkedIn" width="24" height="24"/>
+                                </a>
+                            </t>
+                            <t t-if="object.event_id.company_id.social_twitter" style="background-color:white !important;">
+                                <a t-att-href="object.event_id.company_id.social_twitter" target="_blank" style="margin: 0 5px;">
+                                    <img src="/custom_fsdc/static/src/img/twitter.png" alt="Twitter" width="24" height="24" />
+                                </a>
+                            </t>
+                            <t t-if="object.event_id.company_id.social_youtube" style="background-color:white !important;">
+                                <a t-att-href="object.event_id.company_id.social_youtube" target="_blank" style="margin: 0 5px;">
+                                    <img src="/custom_fsdc/static/src/img/youtube.png" alt="YouTube" width="24" height="24"/>
+                                </a>
+                            </t>
+                        </div>
+                        <a href="https://www.fsdc.org.hk/en/privacy-policy/" target="_blank" style="color:#714B67; text-decoration:none;">Privacy Policy</a>
+                        |
+                        <a href="https://www.fsdc.org.hk/en/disclaimer/" target="_blank" style="color:#714B67; text-decoration:none;">Terms and Conditions</a>
+                        <div class="text-center">
+                            <a href="https://www.fsdc.org.hk/en/privacy-policy/" target="_blank" style="color:#714B67; text-decoration:none;">Unsubscribe</a>
+                            <p style="color: black;">Copyright © 2025 Financial Services Development Council. All rights reserved.</p>
+                        </div>
+                    </div>
+                </div>
+            </field>
+        </record>
+
+        <!--PRE EVENT MAIL REMINDER 2 DAYS-->
+        <record id="mail_template_pre_event_reminder_2_days" model="mail.template">
+            <field name="name">Pre-Event Email Reminder: Before 2 Days</field>
+            <field name="model_id" ref="event.model_event_registration"/>
+            <field name="subject">Reminder: You event {{ object.event_id.name }} is in 2 Days!</field>
+            <field name="email_from">{{ user.company_id.email }}</field>
+            <field name="email_to">{{ object.email }}</field>
+            <field name="body_html" type="html">
+                <div class="container" style="max-width: 600px; background-color: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-bottom: 20px;">
+                        <div style="flex: 1; text-align: left;">
+                            <t t-if="object.event_id.company_id.logo">
+                                <img t-att-src="'/logo.png?company=%s' % object.event_id.company_id.id" alt="Company Logo" style="padding: 0px; margin: 0px; height: auto; width: 80px;"/>
+                            </t>
+                        </div>
+                        <div style="flex: 2; text-align: right; font-weight: bold; font-size: 18px; color: #b90034;">
+                            Financial Services Development Council
+                        </div>
+                    </div>
+                    <div class="text-center mb-4 mt-3">
+                        <h1 class="text-white bg-primary p-3 rounded">Event Reminder: 2 Days Left</h1>
+                    </div>
+                    <div>
+                        <h2>Hello <t t-out="object.name"/>,</h2>
+                        <p>This is a friendly reminder that your upcoming event <strong><t t-out="object.event_id.name"/></strong> is happening in just 2 days! We're excited to have you join us. Here are the details of your event:</p>
+                        <ul class="list-unstyled">
+                            <li><strong>Event Date: </strong> <t t-out="object.event_id.date_begin"/></li>
+                            <li><strong>Location: </strong> <t t-out="object.event_id.zoom_meeting_link"/></li>
+                        </ul>
+                        <p>We recommend reviewing the event details and preparing accordingly. If you need any further information or have questions, feel free to reach out to us.</p>
+                    </div>
+                    <div class="text-center mt-4" style="border-top: 1px solid #eee; padding-top: 10px;">
+                        <p>Thank you for being a part of <t t-out="object.event_id.name"/> . We can't wait to see you there!</p>
+                        <p>If you have any questions, please feel free to contact us at<br/> <a t-att-href="'mailto:' + object.event_id.company_id.email" class="text-info"><t t-out="object.event_id.company_id.email"/></a>.</p>
+                        <p>Best Regards,<br/><t t-out="object.company_id.name"/></p>
+                    </div>
+                    <div class="text-center mt-3" style="border-top: 1px solid #ddd; padding-top: 15px; font-size: 12px; color: #714B67;">
+                        <div class="text-center mb-3">
+                            <t t-if="object.event_id.company_id.social_linkedin" style="background-color:white !important;">
+                                <a t-att-href="object.event_id.company_id.social_linkedin" target="_blank" style="margin: 0 5px;">
+                                    <img src="/custom_fsdc/static/src/img/linkedin.png" alt="LinkedIn" width="24" height="24"/>
+                                </a>
+                            </t>
+                            <t t-if="object.event_id.company_id.social_twitter" style="background-color:white !important;">
+                                <a t-att-href="object.event_id.company_id.social_twitter" target="_blank" style="margin: 0 5px;">
+                                    <img src="/custom_fsdc/static/src/img/twitter.png" alt="Twitter" width="24" height="24" />
+                                </a>
+                            </t>
+                            <t t-if="object.event_id.company_id.social_youtube" style="background-color:white !important;">
+                                <a t-att-href="object.event_id.company_id.social_youtube" target="_blank" style="margin: 0 5px;">
+                                    <img src="/custom_fsdc/static/src/img/youtube.png" alt="YouTube" width="24" height="24"/>
+                                </a>
+                            </t>
+                        </div>
+                        <a href="https://www.fsdc.org.hk/en/privacy-policy/" target="_blank" style="color:#714B67; text-decoration:none;">Privacy Policy</a>
+                        |
+                        <a href="https://www.fsdc.org.hk/en/disclaimer/" target="_blank" style="color:#714B67; text-decoration:none;">Terms and Conditions</a>
+                        <div class="text-center">
+                            <a href="https://www.fsdc.org.hk/en/privacy-policy/" target="_blank" style="color:#714B67; text-decoration:none;">Unsubscribe</a>
+                            <p style="color: black;">Copyright © 2025 Financial Services Development Council. All rights reserved.</p>
+                        </div>
+                    </div>
+                </div>
+            </field>
+        </record>
+
+        <!-- PRE EVENT MAIL REMINDER 7 DAYS-->
+        <record id="mail_template_pre_event_reminder_7_days" model="mail.template">
+            <field name="name">Pre-Event Email Reminder: Before 7 Days</field>
+            <field name="model_id" ref="event.model_event_registration"/>
+            <field name="subject">Reminder: You event {{ object.event_id.name }} is in 7 Days!</field>
+            <field name="email_from">{{ user.company_id.email }}</field>
+            <field name="email_to">{{ object.email }}</field>
+            <field name="body_html" type="html">
+                <div class="container" style="max-width: 600px; background-color: #fff !important; border-radius: 8px; padding: 20px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-bottom: 20px;">
+                        <div style="flex: 1; text-align: left;">
+                            <t t-if="object.event_id.company_id.logo">
+                                <img t-att-src="'/logo.png?company=%s' % object.event_id.company_id.id" alt="Company Logo" style="padding: 0px; margin: 0px; height: auto; width: 80px;"/>
+                            </t>
+                        </div>
+                        <div style="flex: 2; text-align: right; font-weight: bold; font-size: 18px; color: #b90034;">
+                            Financial Services Development Council
+                        </div>
+                    </div>
+                    <div class="text-center mb-4 mt-3">
+                        <h1 class="text-white bg-primary p-3 rounded">Event Reminder: 7 Days Left</h1>
+                    </div>
+                    <div>
+                        <h2>Hello <t t-out="object.name"/>,</h2>
+                        <p>This is a friendly reminder that your upcoming event <strong><t t-out="object.event_id.name"/></strong> is happening in just 7 days! We're excited to have you join us. Here are the details of your event:</p>
+                        <ul class="list-unstyled">
+                            <li><strong>Event Date: </strong> <t t-out="object.event_id.date_begin"/></li>
+                            <li><strong>Location: </strong> <t t-out="object.event_id.zoom_meeting_link"/></li>
+                        </ul>
+                        <p>We recommend reviewing the event details and preparing accordingly. If you need any further information or have questions, feel free to reach out to us.</p>
+                    </div>
+                    <div class="text-center mt-4" style="border-top: 1px solid #eee; padding-top: 10px;">
+                        <p>Thank you for being a part of <t t-out="object.event_id.name"/> . We can't wait to see you there!</p>
+                        <p>If you have any questions, please feel free to contact us at<br/> <t t-if="object.event_id.company_id.email">
+                            <a t-att-href="'mailto:' + object.event_id.company_id.email" class="text-info">
+                                <t t-out="object.event_id.company_id.email"/>
+                            </a>
+                        </t>.</p>
+                        <p>Best Regards,<br/><t t-out="object.company_id.name"/></p>
+                    </div>
+                    <div class="text-center mt-3" style="border-top: 1px solid #ddd; padding-top: 15px; font-size: 12px; color: #714B67;">
+                        <div class="text-center mb-3">
+                            <t t-if="object.event_id.company_id.social_linkedin" style="background-color:white !important;">
+                                <a t-att-href="object.event_id.company_id.social_linkedin" target="_blank" style="margin: 0 5px;">
+                                    <img src="/custom_fsdc/static/src/img/linkedin.png" alt="LinkedIn" width="24" height="24"/>
+                                </a>
+                            </t>
+                            <t t-if="object.event_id.company_id.social_twitter" style="background-color:white !important;">
+                                <a t-att-href="object.event_id.company_id.social_twitter" target="_blank" style="margin: 0 5px;">
+                                    <img src="/custom_fsdc/static/src/img/twitter.png" alt="Twitter" width="24" height="24" />
+                                </a>
+                            </t>
+                            <t t-if="object.event_id.company_id.social_youtube" style="background-color:white !important;">
+                                <a t-att-href="object.event_id.company_id.social_youtube" target="_blank" style="margin: 0 5px;">
+                                    <img src="/custom_fsdc/static/src/img/youtube.png" alt="YouTube" width="24" height="24"/>
+                                </a>
+                            </t>
+                        </div>
+                        <a href="https://www.fsdc.org.hk/en/privacy-policy/" target="_blank" style="color:#714B67; text-decoration:none;">Privacy Policy</a>
+                        |
+                        <a href="https://www.fsdc.org.hk/en/disclaimer/" target="_blank" style="color:#714B67; text-decoration:none;">Terms and Conditions</a>
+                        <div class="text-center">
+                            <a href="https://www.fsdc.org.hk/en/privacy-policy/" target="_blank" style="color:#714B67; text-decoration:none;">Unsubscribe</a>
+                            <p style="color: black;">Copyright © 2025 Financial Services Development Council. All rights reserved.</p>
+                        </div>
+                    </div>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

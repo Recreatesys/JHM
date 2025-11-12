@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_crm_browser,crm.browser,asiabc_crm.model_crm_browser,,1,1,1,1
+access_crm_business_type,crm.business.type,asiabc_crm.model_crm_business_type,,1,1,1,1
+access_crm_industry_experience,crm.industry.experience,asiabc_crm.model_crm_industry_experience,,1,1,1,1
+access_crm_source_location,crm.source.location,asiabc_crm.model_crm_source_location,,1,1,1,1
+access_res_citizenship,res.citizenship,asiabc_crm.model_res_citizenship,,1,1,1,1

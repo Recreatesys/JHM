@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_job_code_form" model="ir.ui.view">
+        <field name="name">job.code.form</field>
+        <field name="model">job.code</field>
+        <field name="arch" type="xml">
+            <form string="Job Code">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group></group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_job_code_tree" model="ir.ui.view">
+        <field name="name">job.code.list</field>
+        <field name="model">job.code</field>
+        <field name="arch" type="xml">
+            <list string="Job Codes">
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_job_code" model="ir.actions.act_window">
+        <field name="name">Job Codes</field>
+        <field name="res_model">job.code</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_sales_config_job_code"
+              name="Job Codes"
+              parent="sale.menu_sale_config"
+              action="action_job_code"
+    />
+</odoo>

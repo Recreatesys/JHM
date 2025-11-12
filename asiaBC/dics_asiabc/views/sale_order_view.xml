@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_order_form_inherit_job_code" model="ir.ui.view">
+        <field name="name">sale.order.form.inherit.job.code</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="job_code_id"/>
+                <div class="o_row o_inline" style="display: flex; align-items: center; flex-wrap: nowrap;">
+
+                    <!-- Group Field Label -->
+                    <label for="group_id" style="margin-right: 5px;"/>
+
+                    <!-- Group Field (Readonly in the view) -->
+                    <field name="group_id" readonly="1" force_save="True" class="o_inline"
+                           style="flex: 1; min-width: 150px; margin-right: 5px;"/>
+
+                    <!-- Contact Count Button next to the Group Field -->
+                    <button name="action_view_contacts_in_group"
+                            type="object"
+                            class="oe_stat_button o_inline"
+                            icon="fa-users"
+                            style="margin-left: 5px;">
+                        <div class="o_field_widget o_stat_info">
+                            <span class="o_stat_value">
+                                <field name="contact_count"/>
+                            </span>
+                        </div>
+                    </button>
+                </div>
+
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="groyp_view_order_product_search" model="ir.ui.view">
+        <field name="name">sale.report.search.group</field>
+        <field name="model">sale.report</field>
+        <field name="inherit_id" ref="sale.view_order_product_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='Sales']" position='after'>
+                <separator/>
+                <filter string="Group" name="group" context="{'group_by':'group_id'}"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <templates id="template" xml:space="preserve">
+
+    <t t-inherit="documents.DocumentsInspector.buttons" t-inherit-mode="extension">
+        <xpath expr="//button[hasclass('o_inspector_download')]" position="after">       
+            <button class="btn fa fa-users o_inspector_button o_inspector_shared_users" title="share a file with another user" t-on-click.stop.prevent="onSharedUsers" t-att-disabled="editDisabled"/>
+        </xpath>
+    </t>
+
+</templates> -->
+
+<templates id="template" xml:space="preserve">
+
+    <t t-inherit="documents.DocumentsDetailsPanel" t-inherit-mode="extension">
+        <xpath expr="//button[hasclass('o_inspector_download')]" position="after">       
+            <button class="btn fa fa-users o_inspector_button o_inspector_shared_users" title="share a file with another user" t-on-click.stop.prevent="onSharedUsers" t-att-disabled="editDisabled"/>
+        </xpath>
+    </t>
+
+</templates>

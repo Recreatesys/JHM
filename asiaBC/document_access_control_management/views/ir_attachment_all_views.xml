@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="inherit_attachment_search_all_documents" model="ir.ui.view">
+        <field name="name">ir.attachment.inherit.form</field>
+        <field name="model">ir.attachment</field>
+        <field name="inherit_id" ref="documents_portal_management.view_attachment_search_all_documents"/>
+        <field name="arch" type="xml">
+            <xpath expr="//searchpanel" position="replace">
+                <searchpanel>
+                    <field name="folder_id" icon="fa-folder" enable_counters="0" expand="1"/>
+                    <field name="tag_ids" select="multi" groupby="folder_id" icon="fa-tag" enable_counters="1"/>
+                </searchpanel>
+            </xpath>
+        </field>
+    </record>
+</odoo>

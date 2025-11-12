@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-name="custom_fsdc.EventDashboard">
+        <div class="event-dashboard-page">
+            <h2 class="dashboard-header">Post Event Dashboard</h2>
+
+            <div class="dashboard-scroll">
+                <div class="dashboard-grid">
+                    <t t-foreach="state.eventStats" t-as="stat" t-key="stat.id">
+                        <div class="card dashboard-card">
+                            <div class="event-title-container">
+                                <h4 class="text-center event-title" t-attf-data-tooltip="#{stat.name}">
+                                    <i class="fa fa-calendar me-2"/> <t t-esc="stat.name"/>
+                                </h4>
+                            </div>
+                            <div class="text-center mt-4">
+                                <p>Registrants: <strong><t t-esc="stat.registrants"/></strong></p>
+                                <p>Attendees: <strong><t t-esc="stat.attendees"/></strong></p>
+                                <p>Attendance: <strong><t t-esc="stat.percent"/>%</strong></p>
+                            </div>
+                            <div class="d-flex justify-content-center gap-2 mt-auto">
+                                <div class="btn btn-outline-primary btn-sm w-50 text-center"
+                                     t-on-click="() => this.openRegistrantlist(stat.id)">
+                                    View Registrants
+                                </div>
+                                <div class="btn btn-outline-success btn-sm w-50 text-center"
+                                     t-on-click="() => this.openAttendeeslist(stat.id)">
+                                    View Attendees
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

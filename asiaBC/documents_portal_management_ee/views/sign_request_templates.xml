@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="documents_portal_management_ee._doc_sign" inherit_id="sign._doc_sign">
+        <xpath expr="//div[@class='o_sign_validate_banner bg-odoo']" position="inside">
+                <button type="button" class="btn btn-primary o_validate_button_new">Validate Document
+                </button>
+        </xpath>
+        <xpath expr="//button[@class='btn btn-primary o_validate_button']" position="attributes">
+            <attribute name="style">display: none; !important;</attribute>
+        </xpath>
+    </template>
+</odoo>

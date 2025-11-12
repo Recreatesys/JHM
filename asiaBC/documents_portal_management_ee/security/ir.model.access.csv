@@ -1,0 +1,4 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+
+access_documents_document_export_group_user,access.documents.document.export.group.user,model_documents_document_export,base.group_user,1,1,1,1
+access_documents_document_group_portal_user,access.documents.document.group.portal.user,documents.model_documents_document,base.group_portal,1,0,1,0

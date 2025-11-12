@@ -1,0 +1,252 @@
+<odoo>
+
+    <record id="thinktank_and_advisory_body" model="res.sectors">
+        <field name="name">Thinktank and Advisory Body</field>
+    </record>
+
+    <record id="sovereign_wealth_fund" model="res.sectors">
+        <field name="name">Sovereign Wealth Fund</field>
+    </record>
+
+    <record id="marketing_advertising_and_pr_services" model="res.sectors">
+        <field name="name">Marketing/ Advertising and PR Services</field>
+    </record>
+
+    <record id="professional_bodies" model="res.sectors">
+        <field name="name">Professional Bodies</field>
+    </record>
+
+    <record id="professional_certification_institute" model="res.sectors">
+        <field name="name">Professional Certification Institute</field>
+    </record>
+
+    <record id="healthcare_medical_services_and_pharmaceuticals" model="res.sectors">
+        <field name="name">Healthcare/ Medical Services and Pharmaceuticals</field>
+    </record>
+
+    <record id="chambers_and_law_firms" model="res.sectors">
+        <field name="name">Chambers and Law Firms</field>
+    </record>
+
+    <record id="professional_association" model="res.sectors">
+        <field name="name">Professional Association</field>
+    </record>
+
+    <record id="accounting_auditing_and_taxation_services" model="res.sectors">
+        <field name="name">Accounting/ Auditing and Taxation Services</field>
+    </record>
+
+    <record id="corporate_finance_and_advisory" model="res.sectors">
+        <field name="name">Corporate Finance and Advisory</field>
+    </record>
+
+    <record id="sustainable_finance_and_impact_investing" model="res.sectors">
+        <field name="name">Sustainable Finance and Impact Investing</field>
+    </record>
+
+    <record id="development_banking" model="res.sectors">
+        <field name="name">Development Banking</field>
+    </record>
+
+    <record id="carbon_market" model="res.sectors">
+        <field name="name">Carbon Market</field>
+    </record>
+
+    <record id="commercial_banking" model="res.sectors">
+        <field name="name">Commercial Banking</field>
+    </record>
+
+    <record id="non_profit_charitable_organisation" model="res.sectors">
+        <field name="name">Non-Profit/ Charitable Organisation</field>
+    </record>
+
+    <record id="quasi_government_entity" model="res.sectors">
+        <field name="name">Quasi-Government Entity</field>
+    </record>
+
+    <record id="property_development_and_management" model="res.sectors">
+        <field name="name">Property Development and Management</field>
+    </record>
+
+    <record id="retail_banking" model="res.sectors">
+        <field name="name">Retail Banking</field>
+    </record>
+
+    <record id="asset_and_wealth_management" model="res.sectors">
+        <field name="name">Asset and Wealth Management</field>
+    </record>
+
+    <record id="central_banking" model="res.sectors">
+        <field name="name">Central Banking</field>
+    </record>
+
+    <record id="corporate_banking" model="res.sectors">
+        <field name="name">Corporate Banking</field>
+    </record>
+
+    <record id="family_office_services" model="res.sectors">
+        <field name="name">Family Office Services</field>
+    </record>
+
+    <record id="trade_finance_and_supply_chain_finance" model="res.sectors">
+        <field name="name">Trade Finance and Supply Chain Finance</field>
+    </record>
+
+    <record id="virtual_asset_blockchain_and_defi" model="res.sectors">
+        <field name="name">Virtual Asset/ Blockchain and DeFi</field>
+    </record>
+
+    <record id="others" model="res.sectors">
+        <field name="name">Others</field>
+    </record>
+
+    <record id="agriculture_mining_and_natural_resources" model="res.sectors">
+        <field name="name">Agriculture/ Mining and Natural Resources</field>
+    </record>
+
+    <record id="insurance" model="res.sectors">
+        <field name="name">Insurance</field>
+    </record>
+
+    <record id="automotive_logistics_and_transportation_services" model="res.sectors">
+        <field name="name">Automotive/ Logistics and Transportation Services</field>
+    </record>
+
+    <record id="investment_banking" model="res.sectors">
+        <field name="name">Investment Banking</field>
+    </record>
+
+    <record id="virtual_insurer" model="res.sectors">
+        <field name="name">Virtual Insurer</field>
+    </record>
+
+    <record id="retail_wholesale_and_consumer_goods" model="res.sectors">
+        <field name="name">Retail/ Wholesale and Consumer Goods</field>
+    </record>
+
+    <record id="art_entertainment_and_tourism" model="res.sectors">
+        <field name="name">Art/ Entertainment and Tourism</field>
+    </record>
+
+    <record id="securities_and_exchanges" model="res.sectors">
+        <field name="name">Securities and Exchanges</field>
+    </record>
+
+    <record id="education_and_research_institutions" model="res.sectors">
+        <field name="name">Education and Research Institutions</field>
+    </record>
+
+    <record id="commodities" model="res.sectors">
+        <field name="name">Commodities</field>
+    </record>
+
+    <record id="political_organisation" model="res.sectors">
+        <field name="name">Political Organisation</field>
+    </record>
+
+    <record id="regulatory_authority" model="res.sectors">
+        <field name="name">Regulatory Authority</field>
+    </record>
+
+    <record id="digital_banking" model="res.sectors">
+        <field name="name">Digital Banking</field>
+    </record>
+
+    <record id="energy_utilities_and_environment_services" model="res.sectors">
+        <field name="name">Energy/ Utilities and Environment Services</field>
+    </record>
+
+    <record id="market_intelligence" model="res.sectors">
+        <field name="name">Market Intelligence</field>
+    </record>
+
+    <record id="professional_services_and_consulting" model="res.sectors">
+        <field name="name">Professional Services and Consulting</field>
+    </record>
+
+    <record id="public_policy_advisory" model="res.sectors">
+        <field name="name">Public Policy Advisory</field>
+    </record>
+
+    <record id="television" model="res.sectors">
+        <field name="name">Television</field>
+    </record>
+
+    <record id="financial_news" model="res.sectors">
+        <field name="name">Financial News</field>
+    </record>
+
+    <record id="web_3" model="res.sectors">
+        <field name="name">Web 3</field>
+    </record>
+
+    <record id="private_banking" model="res.sectors">
+        <field name="name">Private Banking</field>
+    </record>
+
+    <record id="technology_solution_providers_and_consulting" model="res.sectors">
+        <field name="name">Technology Solution Providers and Consulting</field>
+    </record>
+
+    <record id="general_news" model="res.sectors">
+        <field name="name">General News</field>
+    </record>
+
+    <record id="ip_financing" model="res.sectors">
+        <field name="name">IP Financing</field>
+    </record>
+
+    <record id="pension_funds" model="res.sectors">
+        <field name="name">Pension Funds</field>
+    </record>
+
+    <record id="private_equity_and_venture_capital" model="res.sectors">
+        <field name="name">Private Equity and Venture Capital</field>
+    </record>
+
+    <record id="industrial_and_manufacturing" model="res.sectors">
+        <field name="name">Industrial and Manufacturing</field>
+    </record>
+
+    <record id="fintech" model="res.sectors">
+        <field name="name">FinTech</field>
+    </record>
+
+    <record id="commodity_trading" model="res.sectors">
+        <field name="name">Commodity Trading</field>
+    </record>
+
+    <record id="fund_and_trust_services" model="res.sectors">
+        <field name="name">Fund and Trust Services</field>
+    </record>
+
+    <record id="government_department_entity" model="res.sectors">
+        <field name="name">Government Department/ Entity</field>
+    </record>
+
+    <record id="architecture_construction_engineering" model="res.sectors">
+        <field name="name">Architecture/ Construction and Engineering</field>
+    </record>
+
+    <record id="e-commerce_payment_services" model="res.sectors">
+        <field name="name">E-Commerce and Payment Services</field>
+    </record>
+
+    <record id="securities_exchanged" model="res.sectors">
+        <field name="name">Securites and Exchanges</field>
+    </record>
+
+    <record id="compilance_risk_regulatory" model="res.sectors">
+        <field name="name">Compliance/ Risk and Regulatory</field>
+    </record>
+
+    <record id="conglomerate" model="res.sectors">
+        <field name="name">Conglomerate</field>
+    </record>
+
+    <record id="enviromental_services" model="res.sectors">
+        <field name="name">Environmental Services</field>
+    </record>
+
+
+</odoo>
