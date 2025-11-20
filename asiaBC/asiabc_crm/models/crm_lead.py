@@ -50,6 +50,26 @@ class CrmLead(models.Model):
     budget_expected = fields.Text(
         string="Expected Budget in Bank Account Opening(US$)",
     )
+    gender = fields.Selection([
+        ('male', 'Male'),
+        ('female', 'Female'),
+    ], string="Gender")
+    immigration_country = fields.Many2one(
+        'res.country',
+        string="Immigration Country"
+    )
+
+    industry = fields.Char(
+        string="Industry"
+    )
+
+    migration_budget = fields.Float(
+        string="Migration Budget"
+    )
+    target_sectors = fields.Char(
+        string="Target Sectors"
+    )
+    visa_type = fields.Char(string="Visa Type")
 
     @staticmethod
     def clean_html(html_text):

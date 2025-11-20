@@ -6,6 +6,20 @@
         <field name="model">crm.lead</field>
         <field name="inherit_id" ref="crm.crm_lead_view_form"/>
         <field name="arch" type="xml">
+            <xpath expr="//sheet//group" position="after">
+                <group string="Migration Details">
+                    <group>
+                        <field name="gender"/>
+                        <field name="immigration_country"/>
+                        <field name="industry"/>
+                    </group>
+                    <group>
+                        <field name="migration_budget"/>
+                        <field name="visa_type"/>
+                        <field name="target_sectors"/>
+                    </group>
+                </group>
+            </xpath>
             <xpath expr="//notebook" position="before">
                 <group name="forms_data" string="Forms Data">
                     <group>
