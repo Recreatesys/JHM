@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- CRM Opportunity Form: Sync button + Probability selection -->
+    <record id="crm_lead_view_form_jhm" model="ir.ui.view">
+        <field name="name">crm.lead.view.form.jhm</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_all_leads"/>
+        <field name="arch" type="xml">
+
+            <!-- 1. Add "Sync to Contact" button in the form header -->
+            <xpath expr="//header" position="inside">
+                <button name="action_sync_to_contact"
+                        string="Sync to Contact"
+                        type="object"
+                        class="btn-secondary"
+                        invisible="type != 'opportunity'"/>
+            </xpath>
+
+            <!-- 2. Replace the free-float probability with our selection field -->
+            <xpath expr="//field[@name='probability']" position="replace">
+                <field name="probability_select" string="Probability"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

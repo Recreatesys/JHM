@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Contact Form: add new JHM fields in a dedicated tab -->
+    <record id="res_partner_view_form_jhm" model="ir.ui.view">
+        <field name="name">res.partner.view.form.jhm</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="contacts.res_partner_view_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//notebook" position="inside">
+                <page string="Migration Info" name="jhm_migration_info">
+                    <group>
+                        <group string="Visa">
+                            <field name="visa_program"/>
+                            <field name="previous_visa_program"/>
+                            <field name="x_studio_immigration_country"/>
+                        </group>
+                        <group string="Profile">
+                            <field name="x_studio_gender"/>
+                            <field name="background"/>
+                            <field name="x_studio_occupation"/>
+                            <field name="higher_diploma_or_above"/>
+                            <field name="business_owner_or_management_grade"/>
+                            <field name="b2b_engagement"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Contact">
+                            <field name="x_studio_line_id"/>
+                            <field name="x_studio_spouse_mobile"/>
+                            <field name="x_studio_email_spouse"/>
+                            <field name="x_studio_communication_channel"/>
+                        </group>
+                        <group string="Financial">
+                            <field name="x_studio_migration_budget_1"/>
+                            <field name="industry_id"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>
